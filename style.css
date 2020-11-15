@@ -1,0 +1,136 @@
+:root {
+  --body: #f1f3f8;
+  --font: #282a33;
+  --border: #666;
+  --header: #d6e0f0;
+  --book-container: #e0e2e7;
+  --add-button: #abf79c;
+  --add-button-hover: #9ae68b;
+  --add-button-active: #89d57a;
+  --remove-button: #da9797;
+  --remove-button-hover: #c98686;
+  --remove-button-active: #b87575;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-size: 62.5%;
+  line-height: 1.6;
+}
+
+body {
+  background-color: var(--body);
+  color: var(--font);
+  font-family: "Amatic SC", cursive;
+  font-size: 4rem;
+}
+
+h1,
+h3 {
+  line-height: 1.2;
+}
+
+button {
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.main-header {
+  padding: 2rem;
+  border-bottom: 2px solid var(--border);
+  background-color: var(--header);
+}
+
+.page-title {
+  margin-top: 1rem;
+  font-family: "Bebas Neue", cursive;
+  font-size: 10rem;
+  letter-spacing: 1rem;
+  text-align: center;
+}
+
+.main-container {
+  max-width: 1600px;
+  padding: 2rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+  padding: 2rem;
+}
+
+.book-container {
+  padding-top: 2rem;
+  border: 2px solid var(--border);
+  border-radius: 5px;
+  background-color: var(--book-container);
+}
+
+.button {
+  padding: 1rem;
+  border: 2px solid var(--font);
+  border-radius: 5px;
+  margin: 2rem;
+  font-weight: bold;
+}
+
+.button:focus {
+  outline: none;
+}
+
+.add-button {
+  font-size: 6rem;
+  background-color: var(--add-button);
+}
+
+.add-button:hover {
+  background-color: var(--add-button-hover);
+}
+
+.add-button:active {
+  background-color: var(--add-button-active);
+}
+
+.remove-button {
+  background-color: var(--remove-button);
+}
+
+.remove-button:hover {
+  background-color: var(--remove-button-hover);
+}
+
+.remove-button:active {
+  background-color: var(--remove-button-active);
+}
+
+@media (max-width: 1200px) {
+  .books-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  html {
+    font-size: 57.5%;
+  }
+
+  .main-container {
+    max-width: 600px;
+  }
+
+  .books-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
