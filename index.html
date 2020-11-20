@@ -16,31 +16,45 @@
       <h1 class="page-title">Library</h1>
     </header>
     <main class="main-container">
-      <button class="button add-button">New book</button>
+      <button data-add-button class="button add-button">New book</button>
       <div class="books-grid">
         <div class="book-container">
           <h3>"LOTR"</h3>
           <h3>J. R. R. Tolkien</h3>
           <h3>500 pages</h3>
           <h3>Read</h3>
-          <button class="button remove-button">Remove</button>
+          <button data-remove-button class="button remove-button">
+            Remove
+          </button>
         </div>
         <div class="book-container">
           <h3>"The Witcher"</h3>
           <h3>Andrzej Sapkowski</h3>
           <h3>300 pages</h3>
           <h3>Not read yet</h3>
-          <button class="button remove-button">Remove</button>
+          <button data-remove-button class="button remove-button">
+            Remove
+          </button>
         </div>
         <div class="book-container">
           <h3>"Harry Potter"</h3>
           <h3>J. K. Rowling</h3>
           <h3>600 pages</h3>
           <h3>Not read yet</h3>
-          <button class="button remove-button">Remove</button>
+          <button data-remove-button class="button remove-button">
+            Remove
+          </button>
         </div>
       </div>
     </main>
+    <div class="popup active">
+      <input data-title type="text" placeholder="Title" />
+      <input data-author type="text" placeholder="Author" />
+      <input data-pages type="text" placeholder="Pages" />
+      <input data-read type="text" placeholder="Read?" />
+      <button class="button add-button">Add</button>
+    </div>
+    <div class="overlay active"></div>
     <script src="script.js"></script>
   </body>
 </html>
