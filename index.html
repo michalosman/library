@@ -12,49 +12,60 @@
     />
   </head>
   <body>
-    <header class="main-header">
-      <h1 class="page-title">Library</h1>
+    <header class="header">
+      <h1 class="header__title">Library</h1>
     </header>
-    <main class="main-container">
-      <button data-add-button class="button add-button">New book</button>
+    <div class="container">
+      <button class="btn btn--green btn--big js-new-book-btn">New book</button>
       <div class="books-grid">
-        <div class="book-container">
+        <div class="books-grid__book-card">
           <h3>"LOTR"</h3>
           <h3>J. R. R. Tolkien</h3>
           <h3>500 pages</h3>
           <h3>Read</h3>
-          <button data-remove-button class="button remove-button">
-            Remove
-          </button>
+          <button class="btn btn--red js-remove-btn">Remove</button>
         </div>
-        <div class="book-container">
+        <div class="books-grid__book-card">
           <h3>"The Witcher"</h3>
           <h3>Andrzej Sapkowski</h3>
           <h3>300 pages</h3>
           <h3>Not read yet</h3>
-          <button data-remove-button class="button remove-button">
-            Remove
-          </button>
+          <button class="btn btn--red js-remove-btn">Remove</button>
         </div>
-        <div class="book-container">
+        <div class="books-grid__book-card">
           <h3>"Harry Potter"</h3>
           <h3>J. K. Rowling</h3>
           <h3>600 pages</h3>
           <h3>Not read yet</h3>
-          <button data-remove-button class="button remove-button">
-            Remove
-          </button>
+          <button class="btn btn--red js-remove-btn">Remove</button>
         </div>
       </div>
-    </main>
-    <div class="popup active">
-      <input data-title type="text" placeholder="Title" />
-      <input data-author type="text" placeholder="Author" />
-      <input data-pages type="text" placeholder="Pages" />
-      <input data-read type="text" placeholder="Read?" />
-      <button class="button add-button">Add</button>
     </div>
-    <div class="overlay active"></div>
+    <div class="popup popup--active">
+      <h3>Title</h3>
+      <input
+        class="popup__input js-title-input"
+        type="text"
+        placeholder="Title"
+      />
+      <input
+        class="popup__input js-author-input"
+        type="text"
+        placeholder="Author"
+      />
+      <input
+        class="popup__input js-pages-input"
+        type="text"
+        placeholder="Pages"
+      />
+      <input
+        class="popup__input js-is-read-input"
+        type="text"
+        placeholder="Read?"
+      />
+      <button class="btn btn--green btn--big js-add-book-btn">Add book</button>
+    </div>
+    <div class="overlay overlay--active"></div>
     <script src="script.js"></script>
   </body>
 </html>

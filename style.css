@@ -3,13 +3,13 @@
   --font: #282a33;
   --border: #666;
   --header: #d6e0f0;
-  --book-container: #e0e2e7;
-  --add-button: #abf79c;
-  --add-button-hover: #9ae68b;
-  --add-button-active: #89d57a;
-  --remove-button: #da9797;
-  --remove-button-hover: #c98686;
-  --remove-button-active: #b87575;
+  --book-card: #e0e2e7;
+  --btn--green: #abf79c;
+  --btn--green-hover: #9ae68b;
+  --btn--green-active: #89d57a;
+  --btn--red: #da9797;
+  --btn--red-hover: #c98686;
+  --btn--red-active: #b87575;
   --popup: #d6e0f0;
 }
 
@@ -33,6 +33,8 @@ body {
   font-size: 4rem;
 }
 
+/* TAGS */
+
 h1,
 h3 {
   line-height: 1.2;
@@ -51,13 +53,15 @@ input {
   font-size: inherit;
 }
 
-.main-header {
+/* HEADER */
+
+.header {
   padding: 2rem;
   border-bottom: 2px solid var(--border);
   background-color: var(--header);
 }
 
-.page-title {
+.header__title {
   margin-top: 1rem;
   font-family: "Bebas Neue", cursive;
   font-size: 10rem;
@@ -65,7 +69,9 @@ input {
   text-align: center;
 }
 
-.main-container {
+/* MAIN */
+
+.container {
   max-width: 1600px;
   padding: 2rem;
   margin: 0 auto;
@@ -79,14 +85,16 @@ input {
   padding: 2rem;
 }
 
-.book-container {
+.books-grid__book-card {
   padding-top: 2rem;
   border: 2px solid var(--border);
   border-radius: 5px;
-  background-color: var(--book-container);
+  background-color: var(--book-card);
 }
 
-.button {
+/* BUTTONS */
+
+.btn {
   padding: 1rem;
   border: 2px solid var(--border);
   border-radius: 5px;
@@ -94,57 +102,62 @@ input {
   font-weight: bold;
 }
 
-.button:focus {
+.btn:focus {
   outline: none;
 }
 
-.add-button {
+.btn--big {
   font-size: 6rem;
-  background-color: var(--add-button);
 }
 
-.add-button:hover {
-  background-color: var(--add-button-hover);
+.btn--green {
+  background-color: var(--btn--green);
 }
 
-.add-button:active {
-  background-color: var(--add-button-active);
+.btn--green:hover {
+  background-color: var(--btn--green-hover);
 }
 
-.remove-button {
-  background-color: var(--remove-button);
+.btn--green:active {
+  background-color: var(--btn--green-active);
 }
 
-.remove-button:hover {
-  background-color: var(--remove-button-hover);
+.btn--red {
+  background-color: var(--btn--red);
 }
 
-.remove-button:active {
-  background-color: var(--remove-button-active);
+.btn--red:hover {
+  background-color: var(--btn--red-hover);
 }
+
+.btn--red:active {
+  background-color: var(--btn--red-active);
+}
+
+/* POPUP */
 
 .popup {
-  min-width: 250px;
+  position: fixed;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 250px;
   padding: 3rem;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  transition: 200ms ease-in-out;
   border-radius: 5px;
   background-color: var(--popup);
+  transform: translate(-50%, -50%) scale(0);
+  transition: 200ms ease-in-out;
   text-align: center;
-  z-index: 1;
 }
 
-.popup.active {
+.popup--active {
   transform: translate(-50%, -50%) scale(1);
 }
 
-.popup input {
+.popup__input {
   width: 80%;
   margin: 2rem;
   padding: 1rem;
@@ -153,7 +166,7 @@ input {
   font-weight: bold;
 }
 
-.popup input:focus {
+.popup__input:focus {
   outline: none;
 }
 
@@ -167,7 +180,7 @@ input {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.overlay.active {
+.overlay--active {
   opacity: 1;
 }
 
