@@ -16,65 +16,54 @@
     <header class="header">
       <h1 class="header__title">Library</h1>
     </header>
-    <div class="container">
+    <div class="container js-container">
       <button class="button button--green button--large js-new-book-button">
         New book
       </button>
-      <div class="books-grid">
-        <div class="books-grid__book-card">
-          <h3 class="books-grid__book-text">"LOTR"</h3>
-          <h3 class="books-grid__book-text">J. R. R. Tolkien</h3>
-          <h3 class="books-grid__book-text">500 pages</h3>
-          <h3 class="books-grid__book-text">Read</h3>
-          <button class="button button--red js-remove-button">Remove</button>
-        </div>
-        <div class="books-grid__book-card">
-          <h3 class="books-grid__book-text">"The Witcher"</h3>
-          <h3 class="books-grid__book-text">Andrzej Sapkowski</h3>
-          <h3 class="books-grid__book-text">300 pages</h3>
-          <h3 class="books-grid__book-text">Not read yet</h3>
-          <button class="button button--red js-remove-button">Remove</button>
-        </div>
-        <div class="books-grid__book-card">
-          <h3 class="books-grid__book-text">"Harry Potter"</h3>
-          <h3 class="books-grid__book-text">J. K. Rowling</h3>
-          <h3 class="books-grid__book-text">600 pages</h3>
-          <h3 class="books-grid__book-text">Not read yet</h3>
-          <button class="button button--red js-remove-button">Remove</button>
-        </div>
-      </div>
+      <div class="books-grid js-books-grid"></div>
     </div>
-    <div class="popup">
-      <h3 class="popup__title">Add new book</h3>
-      <input
-        class="popup__input js-title-input"
-        type="text"
-        placeholder="Title"
-      />
-      <input
-        class="popup__input js-author-input"
-        type="text"
-        placeholder="Author"
-      />
-      <input
-        class="popup__input js-pages-input"
-        type="text"
-        placeholder="Pages"
-      />
-      <div class="popup__is-read">
-        <label for="is-read">Read?</label>
+    <div class="popup js-popup">
+      <form class="popup__form js-popup-form" action="/" method="GET">
+        <h3 class="popup__title">Add new book</h3>
         <input
-          class="popup__checkbox"
-          type="checkbox"
-          name="is-read"
-          id="is-read"
+          class="popup__input"
+          type="text"
+          name="title"
+          id="title"
+          placeholder="Title"
+          required
         />
-      </div>
-      <button class="button button--green button--medium js-add-book-button">
-        Confirm
-      </button>
+        <input
+          class="popup__input"
+          type="text"
+          name="author"
+          id="author"
+          placeholder="Author"
+          required
+        />
+        <input
+          class="popup__input"
+          type="number"
+          name="pages"
+          id="pages"
+          placeholder="Pages"
+          required
+        />
+        <div class="popup__is-read">
+          <label for="is-read">Read?</label>
+          <input
+            class="popup__checkbox"
+            type="checkbox"
+            name="is-read"
+            id="is-read"
+          />
+        </div>
+        <button class="button button--green button--medium" type="submit">
+          Submit
+        </button>
+      </form>
     </div>
-    <div class="overlay"></div>
+    <div class="overlay js-overlay"></div>
     <script src="script.js"></script>
   </body>
 </html>
