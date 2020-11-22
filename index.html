@@ -6,8 +6,9 @@
     <title>Library</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Bebas+Neue&family=Roboto&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -16,33 +17,35 @@
       <h1 class="header__title">Library</h1>
     </header>
     <div class="container">
-      <button class="btn btn--green btn--big js-new-book-btn">New book</button>
+      <button class="button button--green button--large js-new-book-button">
+        New book
+      </button>
       <div class="books-grid">
         <div class="books-grid__book-card">
-          <h3>"LOTR"</h3>
-          <h3>J. R. R. Tolkien</h3>
-          <h3>500 pages</h3>
-          <h3>Read</h3>
-          <button class="btn btn--red js-remove-btn">Remove</button>
+          <h3 class="books-grid__book-text">"LOTR"</h3>
+          <h3 class="books-grid__book-text">J. R. R. Tolkien</h3>
+          <h3 class="books-grid__book-text">500 pages</h3>
+          <h3 class="books-grid__book-text">Read</h3>
+          <button class="button button--red js-remove-button">Remove</button>
         </div>
         <div class="books-grid__book-card">
-          <h3>"The Witcher"</h3>
-          <h3>Andrzej Sapkowski</h3>
-          <h3>300 pages</h3>
-          <h3>Not read yet</h3>
-          <button class="btn btn--red js-remove-btn">Remove</button>
+          <h3 class="books-grid__book-text">"The Witcher"</h3>
+          <h3 class="books-grid__book-text">Andrzej Sapkowski</h3>
+          <h3 class="books-grid__book-text">300 pages</h3>
+          <h3 class="books-grid__book-text">Not read yet</h3>
+          <button class="button button--red js-remove-button">Remove</button>
         </div>
         <div class="books-grid__book-card">
-          <h3>"Harry Potter"</h3>
-          <h3>J. K. Rowling</h3>
-          <h3>600 pages</h3>
-          <h3>Not read yet</h3>
-          <button class="btn btn--red js-remove-btn">Remove</button>
+          <h3 class="books-grid__book-text">"Harry Potter"</h3>
+          <h3 class="books-grid__book-text">J. K. Rowling</h3>
+          <h3 class="books-grid__book-text">600 pages</h3>
+          <h3 class="books-grid__book-text">Not read yet</h3>
+          <button class="button button--red js-remove-button">Remove</button>
         </div>
       </div>
     </div>
-    <div class="popup popup--active">
-      <h3>Title</h3>
+    <div class="popup">
+      <h3 class="popup__title">Add new book</h3>
       <input
         class="popup__input js-title-input"
         type="text"
@@ -58,14 +61,20 @@
         type="text"
         placeholder="Pages"
       />
-      <input
-        class="popup__input js-is-read-input"
-        type="text"
-        placeholder="Read?"
-      />
-      <button class="btn btn--green btn--big js-add-book-btn">Add book</button>
+      <div class="popup__is-read">
+        <label for="is-read">Read?</label>
+        <input
+          class="popup__checkbox"
+          type="checkbox"
+          name="is-read"
+          id="is-read"
+        />
+      </div>
+      <button class="button button--green button--medium js-add-book-button">
+        Confirm
+      </button>
     </div>
-    <div class="overlay overlay--active"></div>
+    <div class="overlay"></div>
     <script src="script.js"></script>
   </body>
 </html>
