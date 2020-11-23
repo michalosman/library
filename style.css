@@ -66,16 +66,16 @@ input {
 
 .header__title {
   margin-top: 1rem;
+  color: var(--title-font);
   font-family: "Bebas Neue", cursive;
   font-size: 10rem;
   letter-spacing: 1rem;
-  color: var(--title-font);
   text-align: center;
 }
 
 /* MAIN */
 
-.container {
+.main {
   max-width: 1600px;
   padding: 2rem;
   margin: 0 auto;
@@ -119,8 +119,8 @@ input {
 }
 
 .button--large {
-  font-size: 5rem;
   padding: 1.5rem;
+  font-size: 5rem;
 }
 
 .button--green {
@@ -159,9 +159,9 @@ input {
   border: 2px solid var(--popup-border);
   border-radius: 10px;
   background-color: var(--popup);
+  text-align: center;
   transform: translate(-50%, -50%) scale(0);
   transition: 200ms ease-in-out;
-  text-align: center;
 }
 
 .popup--active {
@@ -181,10 +181,10 @@ input {
 
 .popup__input {
   width: 80%;
-  margin: 2rem;
   padding: 1rem;
   border: 2px solid var(--border);
   border-radius: 5px;
+  margin: 2rem;
   font-weight: bold;
 }
 
@@ -193,11 +193,11 @@ input {
 }
 
 .popup__is-read {
-  width: 50%;
   display: flex;
   justify-content: space-between;
-  margin: 2rem;
+  width: 47%;
   padding: 1rem;
+  margin: 2rem;
 }
 
 .popup__checkbox {
@@ -207,14 +207,14 @@ input {
 }
 
 .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
   display: none;
   width: 100%;
   height: 100%;
-  position: fixed;
-  opacity: 1;
-  top: 0;
-  left: 0;
   background-color: rgba(0, 0, 0, 0.5);
+  opacity: 1;
 }
 
 .overlay--active {
@@ -230,10 +230,6 @@ input {
 @media (max-width: 800px) {
   html {
     font-size: 57.5%;
-  }
-
-  .main-container {
-    max-width: 600px;
   }
 
   .books-grid {

@@ -1,3 +1,7 @@
+"use strict";
+
+// BOOKS ARRAY
+
 class Book {
   constructor(
     title = "Unknown",
@@ -14,19 +18,24 @@ class Book {
 
 let myLibrary = [];
 
+function addToLibrary(newBook) {
+  if (myLibrary.some((book) => book.title === newBook.title)) return false;
+  myLibrary.push(newBook);
+  return true;
+}
+
+function removeFromLibrary(bookTitle) {
+  myLibrary = myLibrary.filter((book) => book.title !== bookTitle);
+}
+
+// POPUP
+
 const newBookButton = document.querySelector(".js-new-book-button");
 const popup = document.querySelector(".js-popup");
 const overlay = document.querySelector(".js-overlay");
-const form = document.querySelector(".js-popup-form");
 
-window.addEventListener("keydown", checkInput);
 newBookButton.addEventListener("click", openPopup);
 overlay.addEventListener("click", closePopup);
-form.addEventListener("submit", addBook);
-
-function checkInput(e) {
-  if (e.key === "Escape") closePopup();
-}
 
 function openPopup() {
   form.reset();
@@ -39,29 +48,47 @@ function closePopup() {
   overlay.classList.remove("overlay--active");
 }
 
+// FORM
+
+const form = document.querySelector(".js-popup-form");
+form.addEventListener("submit", addBook);
+
 function addBook(e) {
   e.preventDefault();
+  if (addToLibrary(getBookFromInput())) {
+    updateBooksGrid();
+    closePopup();
+  } else {
+    alert("This book already exists in your library");
+    return;
+  }
+}
+
+function getBookFromInput() {
   const title = `"${document.querySelector("#title").value}"`;
   const author = document.querySelector("#author").value;
   const pages = document.querySelector("#pages").value;
   const isRead = document.querySelector("#is-read").checked;
-  addBookToLibrary(new Book(title, author, pages, isRead));
-  updateBooksGrid();
-  closePopup();
+  return new Book(title, author, pages, isRead);
 }
 
-function addBookToLibrary(book) {
-  myLibrary.push(book);
-}
+// BOOKS GRID
+
+const booksGrid = document.querySelector(".js-books-grid");
+booksGrid.addEventListener("click", checkBooksGridInput);
 
 function updateBooksGrid() {
-  for (element of myLibrary) {
+  resetGrid();
+  for (let element of myLibrary) {
     createBookCard(element);
   }
 }
 
+function resetGrid() {
+  booksGrid.innerHTML = "";
+}
+
 function createBookCard(book) {
-  const booksGrid = document.querySelector(".js-books-grid");
   const bookCard = document.createElement("div");
   const title = document.createElement("h3");
   const author = document.createElement("h3");
@@ -82,7 +109,7 @@ function createBookCard(book) {
   author.textContent = book.author;
   pages.textContent = book.pages;
   removeButton.textContent = "Remove";
-  if (book.read) {
+  if (book.isRead) {
     read.textContent = "Read";
   } else {
     read.textContent = "Not read";
@@ -94,4 +121,11 @@ function createBookCard(book) {
   bookCard.appendChild(read);
   bookCard.appendChild(removeButton);
   booksGrid.appendChild(bookCard);
+}
+
+function checkBooksGridInput(e) {
+  if (e.target.classList.contains("js-remove-button")) {
+    removeFromLibrary(e.target.parentNode.firstChild.innerHTML);
+    e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+  }
 }

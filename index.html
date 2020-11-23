@@ -16,19 +16,18 @@
     <header class="header">
       <h1 class="header__title">Library</h1>
     </header>
-    <div class="container js-container">
+    <main class="main">
       <button class="button button--green button--large js-new-book-button">
         New book
       </button>
       <div class="books-grid js-books-grid"></div>
-    </div>
+    </main>
     <div class="popup js-popup">
-      <form class="popup__form js-popup-form" action="/" method="GET">
+      <form class="popup__form js-popup-form">
         <h3 class="popup__title">Add new book</h3>
         <input
           class="popup__input"
           type="text"
-          name="title"
           id="title"
           placeholder="Title"
           required
@@ -36,7 +35,6 @@
         <input
           class="popup__input"
           type="text"
-          name="author"
           id="author"
           placeholder="Author"
           required
@@ -44,19 +42,13 @@
         <input
           class="popup__input"
           type="number"
-          name="pages"
           id="pages"
           placeholder="Pages"
           required
         />
         <div class="popup__is-read">
           <label for="is-read">Read?</label>
-          <input
-            class="popup__checkbox"
-            type="checkbox"
-            name="is-read"
-            id="is-read"
-          />
+          <input class="popup__checkbox" type="checkbox" id="is-read" />
         </div>
         <button class="button button--green button--medium" type="submit">
           Submit
