@@ -1,4 +1,22 @@
-// BOOKS ARRAY
+// class Book {
+//   constructor(
+//     title = "Unknown",
+//     author = "Unknown",
+//     pages = "0",
+//     isRead = false
+//   ) {
+//     this.title = title;
+//     this.author = author;
+//     this.pages = pages;
+//     this.isRead = isRead;
+//   }
+
+//   setRead(isRead) {
+//     this.isRead = isRead;
+//   }
+// }
+
+// BOOK CLASS
 
 function Book(
   title = "Unknown",
@@ -12,7 +30,11 @@ function Book(
   this.isRead = isRead;
 }
 
-Book.prototype.setRead = (isRead) => (this.isRead = isRead);
+Book.prototype.setRead = function (isRead) {
+  this.isRead = isRead;
+};
+
+// BOOKS ARRAY
 
 let myLibrary = [];
 
