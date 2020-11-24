@@ -12,7 +12,11 @@
   --button--red-hover: #c98686;
   --button--red-active: #b87575;
   --button--light-green: #d3ffcd;
+  --button--light-green-hover: #c2eebc;
+  --button--light-green-active: #b1ddab;
   --button--light-red: #ffe8e8;
+  --button--light-red-hover: #eed7d7;
+  --button--light-red-active: #ddc6c6;
   --popup: #d6e0f0;
   --popup-border: #282a33;
 }
@@ -154,8 +158,24 @@ input {
   background-color: var(--button--light-green);
 }
 
+.button--light-green:hover {
+  background-color: var(--button--light-green-hover);
+}
+
+.button--light-green:active {
+  background-color: var(--button--light-green-active);
+}
+
 .button--light-red {
   background-color: var(--button--light-red);
+}
+
+.button--light-red:hover {
+  background-color: var(--button--light-red-hover);
+}
+
+.button--light-red:active {
+  background-color: var(--button--light-red-active);
 }
 
 /* POPUP */

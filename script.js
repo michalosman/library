@@ -1,21 +1,3 @@
-// class Book {
-//   constructor(
-//     title = "Unknown",
-//     author = "Unknown",
-//     pages = "0",
-//     isRead = false
-//   ) {
-//     this.title = title;
-//     this.author = author;
-//     this.pages = pages;
-//     this.isRead = isRead;
-//   }
-
-//   setRead(isRead) {
-//     this.isRead = isRead;
-//   }
-// }
-
 // BOOK CLASS
 
 function Book(
@@ -30,10 +12,6 @@ function Book(
   this.isRead = isRead;
 }
 
-Book.prototype.setRead = function (isRead) {
-  this.isRead = isRead;
-};
-
 // BOOKS ARRAY
 
 let myLibrary = [];
@@ -41,15 +19,17 @@ let myLibrary = [];
 function addToLibrary(newBook) {
   if (myLibrary.some((book) => book.title === newBook.title)) return false;
   myLibrary.push(newBook);
+  saveLocal();
   return true;
 }
 
 function removeFromLibrary(bookTitle) {
   myLibrary = myLibrary.filter((book) => book.title !== bookTitle);
+  saveLocal();
 }
 
 function getBook(bookTitle) {
-  for (book of myLibrary) {
+  for (let book of myLibrary) {
     if (book.title === bookTitle) {
       return book;
     }
@@ -165,15 +145,30 @@ function checkBooksGridInput(e) {
     e.target.parentNode.parentNode.removeChild(e.target.parentNode);
   } else if (e.target.classList.contains("js-is-read-button")) {
     if (e.target.innerHTML === "Read") {
-      getBook(e.target.parentNode.firstChild.innerHTML).setRead(false);
+      getBook(e.target.parentNode.firstChild.innerHTML).isRead = false;
       e.target.innerHTML = "Not read";
       e.target.classList.remove("button--light-green");
       e.target.classList.add("button--light-red");
+      saveLocal();
     } else {
-      getBook(e.target.parentNode.firstChild.innerHTML).setRead(true);
+      getBook(e.target.parentNode.firstChild.innerHTML).isRead = true;
       e.target.innerHTML = "Read";
       e.target.classList.remove("button--light-red");
       e.target.classList.add("button--light-green");
+      saveLocal();
     }
   }
 }
+
+// LOCAL STORAGE
+
+function saveLocal() {
+  localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+}
+
+function restoreLocal() {
+  myLibrary = JSON.parse(localStorage.getItem("myLibrary"));
+  updateBooksGrid();
+}
+
+restoreLocal();
