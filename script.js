@@ -89,6 +89,27 @@ function getBookFromInput() {
 const booksGrid = document.querySelector(".js-books-grid");
 booksGrid.addEventListener("click", checkBooksGridInput);
 
+function checkBooksGridInput(e) {
+  if (e.target.classList.contains("js-remove-button")) {
+    removeFromLibrary(e.target.parentNode.firstChild.innerHTML);
+    e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+  } else if (e.target.classList.contains("js-is-read-button")) {
+    if (e.target.innerHTML === "Read") {
+      getBook(e.target.parentNode.firstChild.innerHTML).isRead = false;
+      e.target.innerHTML = "Not read";
+      e.target.classList.remove("button--light-green");
+      e.target.classList.add("button--light-red");
+      saveLocal();
+    } else {
+      getBook(e.target.parentNode.firstChild.innerHTML).isRead = true;
+      e.target.innerHTML = "Read";
+      e.target.classList.remove("button--light-red");
+      e.target.classList.add("button--light-green");
+      saveLocal();
+    }
+  }
+}
+
 function updateBooksGrid() {
   resetGrid();
   for (let element of myLibrary) {
@@ -98,6 +119,7 @@ function updateBooksGrid() {
 
 function resetGrid() {
   booksGrid.innerHTML = "";
+  console.log("reset");
 }
 
 function createBookCard(book) {
@@ -137,27 +159,6 @@ function createBookCard(book) {
   bookCard.appendChild(readButton);
   bookCard.appendChild(removeButton);
   booksGrid.appendChild(bookCard);
-}
-
-function checkBooksGridInput(e) {
-  if (e.target.classList.contains("js-remove-button")) {
-    removeFromLibrary(e.target.parentNode.firstChild.innerHTML);
-    e.target.parentNode.parentNode.removeChild(e.target.parentNode);
-  } else if (e.target.classList.contains("js-is-read-button")) {
-    if (e.target.innerHTML === "Read") {
-      getBook(e.target.parentNode.firstChild.innerHTML).isRead = false;
-      e.target.innerHTML = "Not read";
-      e.target.classList.remove("button--light-green");
-      e.target.classList.add("button--light-red");
-      saveLocal();
-    } else {
-      getBook(e.target.parentNode.firstChild.innerHTML).isRead = true;
-      e.target.innerHTML = "Read";
-      e.target.classList.remove("button--light-red");
-      e.target.classList.add("button--light-green");
-      saveLocal();
-    }
-  }
 }
 
 // LOCAL STORAGE
