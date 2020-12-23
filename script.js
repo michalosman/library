@@ -1,3 +1,5 @@
+"use strict";
+
 // BOOK CLASS
 
 function Book(
@@ -119,7 +121,6 @@ function updateBooksGrid() {
 
 function resetGrid() {
   booksGrid.innerHTML = "";
-  console.log("reset");
 }
 
 function createBookCard(book) {
@@ -169,6 +170,7 @@ function saveLocal() {
 
 function restoreLocal() {
   myLibrary = JSON.parse(localStorage.getItem("myLibrary"));
+  if (myLibrary === null) myLibrary = [];
   updateBooksGrid();
 }
 
