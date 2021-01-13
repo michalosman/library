@@ -2,16 +2,18 @@
 
 // BOOK CLASS
 
-function Book(
-  title = "Unknown",
-  author = "Unknown",
-  pages = "0",
-  isRead = "false"
-) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.isRead = isRead;
+class Book {
+  constructor(
+    title = "Unknown",
+    author = "Unknown",
+    pages = "0",
+    isRead = "false"
+  ) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.isRead = isRead;
+  }
 }
 
 // BOOKS ARRAY
