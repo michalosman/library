@@ -36,11 +36,11 @@ function getBook(bookTitle) {
 
 // NEW BOOK POPUP
 
-const newBookButton = document.getElementById('newBookButton')
+const newBookBtn = document.getElementById('newBookBtn')
 const newBookPopup = document.getElementById('newBookPopup')
 const overlay = document.getElementById('overlay')
 
-newBookButton.addEventListener('click', openNewBookPopup)
+newBookBtn.addEventListener('click', openNewBookPopup)
 overlay.addEventListener('click', closeNewBookPopup)
 
 window.addEventListener('keydown', (e) => {
@@ -94,14 +94,14 @@ function toggleRead(e) {
   if (e.target.innerHTML === 'Read') {
     getBook(e.target.parentNode.firstChild.innerHTML).isRead = false
     e.target.innerHTML = 'Not read'
-    e.target.classList.remove('button--light-green')
-    e.target.classList.add('button--light-red')
+    e.target.classList.remove('btn--light-green')
+    e.target.classList.add('btn--light-red')
     save()
   } else {
     getBook(e.target.parentNode.firstChild.innerHTML).isRead = true
     e.target.innerHTML = 'Read'
-    e.target.classList.remove('button--light-red')
-    e.target.classList.add('button--light-green')
+    e.target.classList.remove('btn--light-red')
+    e.target.classList.add('btn--light-green')
     save()
   }
 }
@@ -122,37 +122,37 @@ function createBookCard(book) {
   const title = document.createElement('h3')
   const author = document.createElement('h3')
   const pages = document.createElement('h3')
-  const readButton = document.createElement('button')
-  const removeButton = document.createElement('button')
+  const readBtn = document.createElement('button')
+  const removeBtn = document.createElement('button')
 
   bookCard.classList.add('books-grid__book-card')
   title.classList.add('books-grid__book-text')
   author.classList.add('books-grid__book-text')
   pages.classList.add('books-grid__book-text')
-  readButton.classList.add('button')
-  removeButton.classList.add('button')
-  removeButton.classList.add('button--red')
-  readButton.onclick = toggleRead
-  removeButton.onclick = removeBook
+  readBtn.classList.add('btn')
+  removeBtn.classList.add('btn')
+  removeBtn.classList.add('btn--red')
+  readBtn.onclick = toggleRead
+  removeBtn.onclick = removeBook
 
   title.textContent = book.title
   author.textContent = book.author
   pages.textContent = `${book.pages} pages`
-  removeButton.textContent = 'Remove'
-  readButton.style.width = '120px'
+  removeBtn.textContent = 'Remove'
+  readBtn.style.width = '120px'
   if (book.isRead) {
-    readButton.textContent = 'Read'
-    readButton.classList.add('button--light-green')
+    readBtn.textContent = 'Read'
+    readBtn.classList.add('btn--light-green')
   } else {
-    readButton.textContent = 'Not read'
-    readButton.classList.add('button--light-red')
+    readBtn.textContent = 'Not read'
+    readBtn.classList.add('btn--light-red')
   }
 
   bookCard.appendChild(title)
   bookCard.appendChild(author)
   bookCard.appendChild(pages)
-  bookCard.appendChild(readButton)
-  bookCard.appendChild(removeButton)
+  bookCard.appendChild(readBtn)
+  bookCard.appendChild(removeBtn)
   booksGrid.appendChild(bookCard)
 }
 
@@ -160,10 +160,10 @@ function createBookCard(book) {
 
 let storageType = ''
 const storagePopup = document.getElementById('storagePopup')
-const localStorageButton = document.getElementById('localStorageButton')
-const googleCloudButton = document.getElementById('googleCloudButton')
-localStorageButton.addEventListener('click', setStorageTypeLocal)
-googleCloudButton.addEventListener('click', setStorageTypeGoogle)
+const localStorageBtn = document.getElementById('localStorageBtn')
+const googleCloudBtn = document.getElementById('googleCloudBtn')
+localStorageBtn.addEventListener('click', setStorageTypeLocal)
+googleCloudBtn.addEventListener('click', setStorageTypeGoogle)
 
 function openStoragePopup() {
   storagePopup.classList.add('popup--active')
@@ -183,6 +183,7 @@ function setStorageTypeLocal() {
 
 function setStorageTypeGoogle() {
   storageType = 'googleCloud'
+  // after log in
   closeStoragePopup()
   restore()
 }
