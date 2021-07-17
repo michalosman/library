@@ -22,7 +22,7 @@
       </button>
       <div class="books-grid" id="booksGrid"></div>
     </main>
-    <div class="popup" id="popup">
+    <div class="popup" id="newBookPopup">
       <form class="popup__form" id="popupForm">
         <h3 class="popup__title">Add new book</h3>
         <input
@@ -55,6 +55,11 @@
         </button>
       </form>
     </div>
-    <div class="overlay" id="newBookOverlay"></div>
+    <div class="popup" id='storagePopup'>
+      <p class="popup__storage-title">Choose storage type</p>
+      <button class="button" id="localStorageButton">Local Storage</button>
+      <button class="button" id="googleCloudButton">Google Cloud</button>
+    </div>
+    <div class="overlay" id="overlay"></div>
   </body>
 </html>

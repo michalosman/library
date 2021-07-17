@@ -37,7 +37,7 @@ html {
 body {
   background-color: var(--body);
   color: var(--font);
-  font-family: "Oswald", sans-serif;
+  font-family: 'Oswald', sans-serif;
   font-size: 3rem;
 }
 
@@ -73,7 +73,7 @@ input {
 .header__title {
   margin-top: 1rem;
   color: var(--title-font);
-  font-family: "Bebas Neue", cursive;
+  font-family: 'Bebas Neue', cursive;
   font-size: 10rem;
   letter-spacing: 1rem;
   text-align: center;
@@ -115,6 +115,11 @@ input {
   border-radius: 5px;
   margin: 2rem;
   font-weight: bold;
+  transition: transform 0.15s ease-in-out;
+}
+
+.button:hover {
+  transform: scale(1.1);
 }
 
 .button:focus {
@@ -203,6 +208,11 @@ input {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.popup__storage-title {
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .popup__title {
