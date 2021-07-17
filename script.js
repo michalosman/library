@@ -1,6 +1,4 @@
-'use strict'
-
-// BOOK CLASS
+// BOOK
 
 class Book {
   constructor(
@@ -16,7 +14,7 @@ class Book {
   }
 }
 
-// BOOKS ARRAY
+// LIBRARY
 
 let library = []
 
@@ -36,20 +34,14 @@ function getBook(bookTitle) {
   return library.find((book) => book.title === bookTitle)
 }
 
-// MEMORY CHOICE POPUP
-
-let memoryChoice = ''
-
-// function
-
 // NEW BOOK POPUP
 
 const newBookButton = document.getElementById('newBookButton')
-const popup = document.getElementById('popup')
-const newBookOverlay = document.getElementById('newBookOverlay')
+const newBookPopup = document.getElementById('newBookPopup')
+const overlay = document.getElementById('overlay')
 
 newBookButton.addEventListener('click', openNewBookPopup)
-newBookOverlay.addEventListener('click', closeNewBookPopup)
+overlay.addEventListener('click', closeNewBookPopup)
 
 window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeNewBookPopup()
@@ -57,13 +49,13 @@ window.addEventListener('keydown', (e) => {
 
 function openNewBookPopup() {
   form.reset()
-  popup.classList.add('popup--active')
-  newBookOverlay.classList.add('overlay--active')
+  newBookPopup.classList.add('popup--active')
+  overlay.classList.add('overlay--active')
 }
 
 function closeNewBookPopup() {
-  popup.classList.remove('popup--active')
-  newBookOverlay.classList.remove('overlay--active')
+  newBookPopup.classList.remove('popup--active')
+  overlay.classList.remove('overlay--active')
 }
 
 // FORM
@@ -82,10 +74,10 @@ function addBook(e) {
 }
 
 function getBookFromInput() {
-  const title = `"${document.querySelector('#title').value}"`
-  const author = document.querySelector('#author').value
-  const pages = document.querySelector('#pages').value
-  const isRead = document.querySelector('#is-read').checked
+  const title = `"${document.getElementById('title').value}"`
+  const author = document.getElementById('author').value
+  const pages = document.getElementById('pages').value
+  const isRead = document.getElementById('is-read').checked
   return new Book(title, author, pages, isRead)
 }
 
@@ -166,6 +158,35 @@ function createBookCard(book) {
 
 // STORAGE
 
+let storageType = ''
+const storagePopup = document.getElementById('storagePopup')
+const localStorageButton = document.getElementById('localStorageButton')
+const googleCloudButton = document.getElementById('googleCloudButton')
+localStorageButton.addEventListener('click', setStorageTypeLocal)
+googleCloudButton.addEventListener('click', setStorageTypeGoogle)
+
+function openStoragePopup() {
+  storagePopup.classList.add('popup--active')
+  overlay.classList.add('overlay--active')
+}
+
+function closeStoragePopup() {
+  storagePopup.classList.remove('popup--active')
+  overlay.classList.remove('overlay--active')
+}
+
+function setStorageTypeLocal() {
+  storageType = 'localStorage'
+  closeStoragePopup()
+  restore()
+}
+
+function setStorageTypeGoogle() {
+  storageType = 'googleCloud'
+  closeStoragePopup()
+  restore()
+}
+
 function save() {
   saveLocal()
 }
@@ -188,4 +209,4 @@ function restoreLocal() {
   updateBooksGrid()
 }
 
-restore()
+openStoragePopup()
