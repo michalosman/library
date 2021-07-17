@@ -126,9 +126,9 @@ function createBookCard(book) {
   const removeBtn = document.createElement('button')
 
   bookCard.classList.add('books-grid__book-card')
-  title.classList.add('books-grid__book-text')
-  author.classList.add('books-grid__book-text')
-  pages.classList.add('books-grid__book-text')
+  title.classList.add('book-card__text')
+  author.classList.add('book-card__text')
+  pages.classList.add('book-card__text')
   readBtn.classList.add('btn')
   removeBtn.classList.add('btn')
   removeBtn.classList.add('btn--red')

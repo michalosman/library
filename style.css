@@ -103,11 +103,11 @@ input {
   text-align: center;
 }
 
-.books-grid__book-text {
+.book-card__text {
   padding: 0.5rem;
 }
 
-/* btnS */
+/* BUTTONS */
 
 .btn {
   padding: 1rem;
@@ -124,6 +124,7 @@ input {
 
 .btn:focus {
   outline: none;
+  transform: scale(1.1);
 }
 
 .btn--medium {
@@ -210,12 +211,12 @@ input {
   align-items: center;
 }
 
-.popup__storage-title {
+.popup__title {
   margin-bottom: 10px;
   font-weight: bold;
 }
 
-.popup__title {
+.popup__big-title {
   margin: 2rem;
   font-size: 4rem;
 }
@@ -231,6 +232,7 @@ input {
 
 .popup__input:focus {
   outline: none;
+  border-color: black;
 }
 
 .popup__is-read {
