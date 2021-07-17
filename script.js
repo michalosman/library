@@ -1,179 +1,191 @@
-"use strict";
+'use strict'
 
 // BOOK CLASS
 
 class Book {
   constructor(
-    title = "Unknown",
-    author = "Unknown",
-    pages = "0",
-    isRead = "false"
+    title = 'Unknown',
+    author = 'Unknown',
+    pages = '0',
+    isRead = 'false'
   ) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.isRead = isRead;
+    this.title = title
+    this.author = author
+    this.pages = pages
+    this.isRead = isRead
   }
 }
 
 // BOOKS ARRAY
 
-let myLibrary = [];
+let library = []
 
 function addToLibrary(newBook) {
-  if (myLibrary.some((book) => book.title === newBook.title)) return false;
-  myLibrary.push(newBook);
-  saveLocal();
-  return true;
+  if (library.some((book) => book.title === newBook.title)) return false
+  library.push(newBook)
+  save()
+  return true
 }
 
 function removeFromLibrary(bookTitle) {
-  myLibrary = myLibrary.filter((book) => book.title !== bookTitle);
-  saveLocal();
+  library = library.filter((book) => book.title !== bookTitle)
+  save()
 }
 
 function getBook(bookTitle) {
-  for (let book of myLibrary) {
-    if (book.title === bookTitle) {
-      return book;
-    }
-  }
-  return null;
+  return library.find((book) => book.title === bookTitle)
 }
 
-// POPUP
+// MEMORY CHOICE POPUP
 
-const newBookButton = document.querySelector(".js-new-book-button");
-const popup = document.querySelector(".js-popup");
-const overlay = document.querySelector(".js-overlay");
+let memoryChoice = ''
 
-newBookButton.addEventListener("click", openPopup);
-overlay.addEventListener("click", closePopup);
+// function
 
-window.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closePopup();
-});
+// NEW BOOK POPUP
 
-function openPopup() {
-  form.reset();
-  popup.classList.add("popup--active");
-  overlay.classList.add("overlay--active");
+const newBookButton = document.getElementById('newBookButton')
+const popup = document.getElementById('popup')
+const newBookOverlay = document.getElementById('newBookOverlay')
+
+newBookButton.addEventListener('click', openNewBookPopup)
+newBookOverlay.addEventListener('click', closeNewBookPopup)
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeNewBookPopup()
+})
+
+function openNewBookPopup() {
+  form.reset()
+  popup.classList.add('popup--active')
+  newBookOverlay.classList.add('overlay--active')
 }
 
-function closePopup() {
-  popup.classList.remove("popup--active");
-  overlay.classList.remove("overlay--active");
+function closeNewBookPopup() {
+  popup.classList.remove('popup--active')
+  newBookOverlay.classList.remove('overlay--active')
 }
 
 // FORM
 
-const form = document.querySelector(".js-popup-form");
-form.addEventListener("submit", addBook);
+const form = document.getElementById('popupForm')
+form.addEventListener('submit', addBook)
 
 function addBook(e) {
-  e.preventDefault();
+  e.preventDefault()
   if (addToLibrary(getBookFromInput())) {
-    updateBooksGrid();
-    closePopup();
+    updateBooksGrid()
+    closeNewBookPopup()
   } else {
-    alert("This book already exists in your library");
+    alert('This book already exists in your library')
   }
 }
 
 function getBookFromInput() {
-  const title = `"${document.querySelector("#title").value}"`;
-  const author = document.querySelector("#author").value;
-  const pages = document.querySelector("#pages").value;
-  const isRead = document.querySelector("#is-read").checked;
-  return new Book(title, author, pages, isRead);
+  const title = `"${document.querySelector('#title').value}"`
+  const author = document.querySelector('#author').value
+  const pages = document.querySelector('#pages').value
+  const isRead = document.querySelector('#is-read').checked
+  return new Book(title, author, pages, isRead)
 }
 
 // BOOKS GRID
 
-const booksGrid = document.querySelector(".js-books-grid");
-booksGrid.addEventListener("click", checkBooksGridInput);
+const booksGrid = document.getElementById('booksGrid')
 
-function checkBooksGridInput(e) {
-  if (e.target.classList.contains("js-remove-button")) {
-    removeFromLibrary(e.target.parentNode.firstChild.innerHTML);
-    e.target.parentNode.parentNode.removeChild(e.target.parentNode);
-  } else if (e.target.classList.contains("js-is-read-button")) {
-    if (e.target.innerHTML === "Read") {
-      getBook(e.target.parentNode.firstChild.innerHTML).isRead = false;
-      e.target.innerHTML = "Not read";
-      e.target.classList.remove("button--light-green");
-      e.target.classList.add("button--light-red");
-      saveLocal();
-    } else {
-      getBook(e.target.parentNode.firstChild.innerHTML).isRead = true;
-      e.target.innerHTML = "Read";
-      e.target.classList.remove("button--light-red");
-      e.target.classList.add("button--light-green");
-      saveLocal();
-    }
+function removeBook(e) {
+  removeFromLibrary(e.target.parentNode.firstChild.innerHTML)
+  e.target.parentNode.parentNode.removeChild(e.target.parentNode)
+}
+
+function toggleRead(e) {
+  if (e.target.innerHTML === 'Read') {
+    getBook(e.target.parentNode.firstChild.innerHTML).isRead = false
+    e.target.innerHTML = 'Not read'
+    e.target.classList.remove('button--light-green')
+    e.target.classList.add('button--light-red')
+    save()
+  } else {
+    getBook(e.target.parentNode.firstChild.innerHTML).isRead = true
+    e.target.innerHTML = 'Read'
+    e.target.classList.remove('button--light-red')
+    e.target.classList.add('button--light-green')
+    save()
   }
 }
 
 function updateBooksGrid() {
-  resetGrid();
-  for (let element of myLibrary) {
-    createBookCard(element);
+  resetGrid()
+  for (let element of library) {
+    createBookCard(element)
   }
 }
 
 function resetGrid() {
-  booksGrid.innerHTML = "";
+  booksGrid.innerHTML = ''
 }
 
 function createBookCard(book) {
-  const bookCard = document.createElement("div");
-  const title = document.createElement("h3");
-  const author = document.createElement("h3");
-  const pages = document.createElement("h3");
-  const readButton = document.createElement("button");
-  const removeButton = document.createElement("button");
+  const bookCard = document.createElement('div')
+  const title = document.createElement('h3')
+  const author = document.createElement('h3')
+  const pages = document.createElement('h3')
+  const readButton = document.createElement('button')
+  const removeButton = document.createElement('button')
 
-  bookCard.classList.add("books-grid__book-card");
-  title.classList.add("books-grid__book-text");
-  author.classList.add("books-grid__book-text");
-  pages.classList.add("books-grid__book-text");
-  readButton.classList.add("button");
-  readButton.classList.add("js-is-read-button");
-  removeButton.classList.add("button");
-  removeButton.classList.add("button--red");
-  removeButton.classList.add("js-remove-button");
+  bookCard.classList.add('books-grid__book-card')
+  title.classList.add('books-grid__book-text')
+  author.classList.add('books-grid__book-text')
+  pages.classList.add('books-grid__book-text')
+  readButton.classList.add('button')
+  removeButton.classList.add('button')
+  removeButton.classList.add('button--red')
+  readButton.onclick = toggleRead
+  removeButton.onclick = removeBook
 
-  title.textContent = book.title;
-  author.textContent = book.author;
-  pages.textContent = `${book.pages} pages`;
-  removeButton.textContent = "Remove";
-  readButton.style.width = "120px";
+  title.textContent = book.title
+  author.textContent = book.author
+  pages.textContent = `${book.pages} pages`
+  removeButton.textContent = 'Remove'
+  readButton.style.width = '120px'
   if (book.isRead) {
-    readButton.textContent = "Read";
-    readButton.classList.add("button--light-green");
+    readButton.textContent = 'Read'
+    readButton.classList.add('button--light-green')
   } else {
-    readButton.textContent = "Not read";
-    readButton.classList.add("button--light-red");
+    readButton.textContent = 'Not read'
+    readButton.classList.add('button--light-red')
   }
 
-  bookCard.appendChild(title);
-  bookCard.appendChild(author);
-  bookCard.appendChild(pages);
-  bookCard.appendChild(readButton);
-  bookCard.appendChild(removeButton);
-  booksGrid.appendChild(bookCard);
+  bookCard.appendChild(title)
+  bookCard.appendChild(author)
+  bookCard.appendChild(pages)
+  bookCard.appendChild(readButton)
+  bookCard.appendChild(removeButton)
+  booksGrid.appendChild(bookCard)
 }
+
+// STORAGE
+
+function save() {
+  saveLocal()
+}
+
+function restore() {
+  restoreLocal()
+}
+
+// FIREBASE
 
 // LOCAL STORAGE
 
 function saveLocal() {
-  localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+  localStorage.setItem('myLibrary', JSON.stringify(library))
 }
 
 function restoreLocal() {
-  myLibrary = JSON.parse(localStorage.getItem("myLibrary"));
-  if (myLibrary === null) myLibrary = [];
-  updateBooksGrid();
+  library = JSON.parse(localStorage.getItem('myLibrary'))
+  if (library === null) library = []
+  updateBooksGrid()
 }
 
-restoreLocal();
+restore()
