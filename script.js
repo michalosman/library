@@ -34,40 +34,43 @@ function getBook(bookTitle) {
   return library.find((book) => book.title === bookTitle)
 }
 
-// NEW BOOK POPUP
+// ADD BOOK POPUP
 
-const newBookBtn = document.getElementById('newBookBtn')
-const newBookPopup = document.getElementById('newBookPopup')
+const addBookBtn = document.getElementById('addBookBtn')
+const addBookPopup = document.getElementById('addBookPopup')
 const overlay = document.getElementById('overlay')
 
-newBookBtn.addEventListener('click', openNewBookPopup)
-overlay.addEventListener('click', closeNewBookPopup)
+addBookBtn.onclick = openAddBookPopup
 
-window.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeNewBookPopup()
-})
-
-function openNewBookPopup() {
+function openAddBookPopup() {
   form.reset()
-  newBookPopup.classList.add('popup--active')
+  addBookPopup.classList.add('popup--active')
   overlay.classList.add('overlay--active')
+  setupOverlayListeners()
 }
 
-function closeNewBookPopup() {
-  newBookPopup.classList.remove('popup--active')
+function setupOverlayListeners() {
+  overlay.onclick = closeAddBookPopup
+  window.onkeydown = (e) => {
+    if (e.key === 'Escape') closeAddBookPopup()
+  }
+}
+
+function closeAddBookPopup() {
+  addBookPopup.classList.remove('popup--active')
   overlay.classList.remove('overlay--active')
 }
 
 // FORM
 
 const form = document.getElementById('popupForm')
-form.addEventListener('submit', addBook)
+form.onsubmit = addBook
 
 function addBook(e) {
   e.preventDefault()
   if (addToLibrary(getBookFromInput())) {
     updateBooksGrid()
-    closeNewBookPopup()
+    closeAddBookPopup()
   } else {
     alert('This book already exists in your library')
   }
@@ -162,8 +165,8 @@ let storageType = ''
 const storagePopup = document.getElementById('storagePopup')
 const localStorageBtn = document.getElementById('localStorageBtn')
 const googleCloudBtn = document.getElementById('googleCloudBtn')
-localStorageBtn.addEventListener('click', setStorageTypeLocal)
-googleCloudBtn.addEventListener('click', setStorageTypeGoogle)
+localStorageBtn.onclick = setStorageTypeLocal
+googleCloudBtn.onclick = setStorageTypeGoogle
 
 function openStoragePopup() {
   storagePopup.classList.add('popup--active')
@@ -178,6 +181,7 @@ function closeStoragePopup() {
 function setStorageTypeLocal() {
   storageType = 'localStorage'
   closeStoragePopup()
+  setupOverlayListeners()
   restore()
 }
 
@@ -185,6 +189,7 @@ function setStorageTypeGoogle() {
   storageType = 'googleCloud'
   // after log in
   closeStoragePopup()
+  setupOverlayListeners()
   restore()
 }
 
@@ -197,6 +202,24 @@ function restore() {
 }
 
 // FIREBASE
+
+const whenSignedIn = document.getElementById('whenSignedIn')
+const whenSignedOut = document.getElementById('whenSignedOut')
+whenSignedIn.hidden = true
+
+const signInBtn = document.getElementById('signInBtn')
+const signOutBtn = document.getElementById('signOutBtn')
+
+const auth = firebase.auth()
+const provider = new firebase.auth.GoogleAuthProvider()
+
+signInBtn.onclick = () => auth.signInWithPopup(provider)
+
+function authUser() {}
+
+function saveFirebase() {}
+
+function resotreFirebase() {}
 
 // LOCAL STORAGE
 

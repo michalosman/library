@@ -65,9 +65,17 @@ input {
 /* HEADER */
 
 .header {
-  padding: 2rem;
   border-bottom: 2px solid var(--border);
   background-color: var(--header);
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1600px;
+  padding: 2rem 4rem;
+  margin: 0 auto;
 }
 
 .header__title {
@@ -118,11 +126,20 @@ input {
   transition: transform 0.15s ease-in-out;
 }
 
-.btn:hover {
+.btn-sign-in,
+.btn-sign-out {
+  margin: 0;
+}
+
+.when-signed-in {
+  display: none;
+}
+
+.btn--default:hover {
   transform: scale(1.1);
 }
 
-.btn:focus {
+.btn--default:focus {
   outline: none;
   transform: scale(1.1);
 }
@@ -140,7 +157,8 @@ input {
   background-color: var(--btn--green);
 }
 
-.btn--green:hover {
+.btn--green:hover,
+.btn--green:focus {
   background-color: var(--btn--green-hover);
 }
 
@@ -152,7 +170,8 @@ input {
   background-color: var(--btn--red);
 }
 
-.btn--red:hover {
+.btn--red:hover,
+.btn--red:focus {
   background-color: var(--btn--red-hover);
 }
 
@@ -164,7 +183,8 @@ input {
   background-color: var(--btn--light-green);
 }
 
-.btn--light-green:hover {
+.btn--light-green:hover,
+.btn--light-green:focus {
   background-color: var(--btn--light-green-hover);
 }
 
@@ -176,7 +196,8 @@ input {
   background-color: var(--btn--light-red);
 }
 
-.btn--light-red:hover {
+.btn--light-red:hover,
+.btn--light-red:focus {
   background-color: var(--btn--light-red-hover);
 }
 
@@ -277,5 +298,15 @@ input {
 
   .books-grid {
     grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  html {
+    font-size: 47.5%;
+  }
+
+  .header__title {
+    font-size: 8rem;
   }
 }
