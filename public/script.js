@@ -41,19 +41,15 @@ const addBookPopup = document.getElementById('addBookPopup')
 const overlay = document.getElementById('overlay')
 
 addBookBtn.onclick = openAddBookPopup
+overlay.onclick = closeAddBookPopup
+window.onkeydown = (e) => {
+  if (e.key === 'Escape') closeAddBookPopup()
+}
 
 function openAddBookPopup() {
   form.reset()
   addBookPopup.classList.add('popup--active')
   overlay.classList.add('overlay--active')
-  setupOverlayListeners()
-}
-
-function setupOverlayListeners() {
-  overlay.onclick = closeAddBookPopup
-  window.onkeydown = (e) => {
-    if (e.key === 'Escape') closeAddBookPopup()
-  }
 }
 
 function closeAddBookPopup() {
@@ -159,39 +155,41 @@ function createBookCard(book) {
   booksGrid.appendChild(bookCard)
 }
 
+// AUTH
+
+const auth = firebase.auth()
+const whenSignedIn = document.getElementById('whenSignedIn')
+const whenSignedOut = document.getElementById('whenSignedOut')
+const loadingRing = document.getElementById('loadingRing')
+const signInBtn = document.getElementById('signInBtn')
+const signOutBtn = document.getElementById('signOutBtn')
+
+signInBtn.onclick = signIn
+signOutBtn.onclick = signOut
+
+function signIn() {
+  const provider = new firebase.auth.GoogleAuthProvider()
+  auth.signInWithPopup(provider)
+}
+
+function signOut() {
+  auth.signOut()
+}
+
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    loadingRing.classList.add('disable')
+    whenSignedOut.classList.remove('active')
+    whenSignedIn.classList.add('active')
+  } else {
+    loadingRing.classList.add('disable')
+    whenSignedIn.classList.remove('active')
+    whenSignedOut.classList.add('active')
+  }
+  restore()
+})
+
 // STORAGE
-
-let storageType = ''
-const storagePopup = document.getElementById('storagePopup')
-const localStorageBtn = document.getElementById('localStorageBtn')
-const googleCloudBtn = document.getElementById('googleCloudBtn')
-localStorageBtn.onclick = setStorageTypeLocal
-googleCloudBtn.onclick = setStorageTypeGoogle
-
-function openStoragePopup() {
-  storagePopup.classList.add('popup--active')
-  overlay.classList.add('overlay--active')
-}
-
-function closeStoragePopup() {
-  storagePopup.classList.remove('popup--active')
-  overlay.classList.remove('overlay--active')
-}
-
-function setStorageTypeLocal() {
-  storageType = 'localStorage'
-  closeStoragePopup()
-  setupOverlayListeners()
-  restore()
-}
-
-function setStorageTypeGoogle() {
-  storageType = 'googleCloud'
-  // after log in
-  closeStoragePopup()
-  setupOverlayListeners()
-  restore()
-}
 
 function save() {
   saveLocal()
@@ -201,21 +199,7 @@ function restore() {
   restoreLocal()
 }
 
-// FIREBASE
-
-const whenSignedIn = document.getElementById('whenSignedIn')
-const whenSignedOut = document.getElementById('whenSignedOut')
-whenSignedIn.hidden = true
-
-const signInBtn = document.getElementById('signInBtn')
-const signOutBtn = document.getElementById('signOutBtn')
-
-const auth = firebase.auth()
-const provider = new firebase.auth.GoogleAuthProvider()
-
-signInBtn.onclick = () => auth.signInWithPopup(provider)
-
-function authUser() {}
+// FIRESTORE
 
 function saveFirebase() {}
 
@@ -232,5 +216,3 @@ function restoreLocal() {
   if (library === null) library = []
   updateBooksGrid()
 }
-
-openStoragePopup()

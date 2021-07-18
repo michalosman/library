@@ -16,12 +16,13 @@
     <header class="header">
       <div class="header__container">
         <h1 class="header__title">Library</h1>
-        <div id="whenSignedOut">
+        <div class="lds-dual-ring" id="loadingRing"></div>
+        <div class="when-signed-out" id="whenSignedOut">
           <button class="btn btn--default btn-sign-in" id="signInBtn">
             Sign in
           </button>
         </div>
-        <div id="whenSignedIn">
+        <div class="when-signed-in" id="whenSignedIn">
           <button class="btn btn--default btn-sign-out" id="signOutBtn">
             Sign out
           </button>
@@ -64,13 +65,6 @@
         </div>
         <button class="btn btn--green btn--medium" type="submit">Submit</button>
       </form>
-    </div>
-    <div class="popup" id="storagePopup">
-      <p class="popup__title">Choose storage type</p>
-      <button class="btn btn--default" id="localStorageBtn">
-        Local Storage
-      </button>
-      <button class="btn btn--default" id="googleCloudBtn">Google Cloud</button>
     </div>
     <div class="overlay" id="overlay"></div>
 

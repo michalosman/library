@@ -131,8 +131,13 @@ input {
   margin: 0;
 }
 
-.when-signed-in {
+.when-signed-in,
+.when-signed-out {
   display: none;
+}
+
+.active {
+  display: block;
 }
 
 .btn--default:hover {
@@ -308,5 +313,38 @@ input {
 
   .header__title {
     font-size: 8rem;
+  }
+}
+
+/* LOADING */
+
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-dual-ring:after {
+  content: ' ';
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+
+.disable {
+  display: none;
+}
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
