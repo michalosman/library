@@ -18,20 +18,32 @@ class Book {
 
 let library = []
 
-function addToLibrary(newBook) {
+const addToLibrary = (newBook) => {
   if (library.some((book) => book.title === newBook.title)) return false
   library.push(newBook)
-  save()
+  saveLocal()
   return true
 }
 
-function removeFromLibrary(bookTitle) {
+const removeFromLibrary = (bookTitle) => {
   library = library.filter((book) => book.title !== bookTitle)
-  save()
+  saveLocal()
 }
 
-function getBook(bookTitle) {
+const getBook = (bookTitle) => {
   return library.find((book) => book.title === bookTitle)
+}
+
+// LOCAL STORAGE
+
+const saveLocal = () => {
+  localStorage.setItem('myLibrary', JSON.stringify(library))
+}
+
+const restoreLocal = () => {
+  library = JSON.parse(localStorage.getItem('myLibrary'))
+  if (library === null) library = []
+  updateBooksGrid()
 }
 
 // ADD BOOK POPUP
@@ -47,20 +59,20 @@ window.onkeydown = (e) => {
 }
 
 function openAddBookPopup() {
-  form.reset()
-  addBookPopup.classList.add('popup--active')
-  overlay.classList.add('overlay--active')
+  addBookForm.reset()
+  addBookPopup.classList.add('active')
+  overlay.classList.add('active')
 }
 
 function closeAddBookPopup() {
-  addBookPopup.classList.remove('popup--active')
-  overlay.classList.remove('overlay--active')
+  addBookPopup.classList.remove('active')
+  overlay.classList.remove('active')
 }
 
 // FORM
 
-const form = document.getElementById('popupForm')
-form.onsubmit = addBook
+const addBookForm = document.getElementById('addBookForm')
+addBookForm.onsubmit = addBook
 
 function addBook(e) {
   e.preventDefault()
@@ -76,7 +88,7 @@ function getBookFromInput() {
   const title = `"${document.getElementById('title').value}"`
   const author = document.getElementById('author').value
   const pages = document.getElementById('pages').value
-  const isRead = document.getElementById('is-read').checked
+  const isRead = document.getElementById('isRead').checked
   return new Book(title, author, pages, isRead)
 }
 
@@ -93,15 +105,15 @@ function toggleRead(e) {
   if (e.target.innerHTML === 'Read') {
     getBook(e.target.parentNode.firstChild.innerHTML).isRead = false
     e.target.innerHTML = 'Not read'
-    e.target.classList.remove('btn--light-green')
-    e.target.classList.add('btn--light-red')
-    save()
+    e.target.classList.remove('btn-light-green')
+    e.target.classList.add('btn-light-red')
+    saveLocal()
   } else {
     getBook(e.target.parentNode.firstChild.innerHTML).isRead = true
     e.target.innerHTML = 'Read'
-    e.target.classList.remove('btn--light-red')
-    e.target.classList.add('btn--light-green')
-    save()
+    e.target.classList.remove('btn-light-red')
+    e.target.classList.add('btn-light-green')
+    saveLocal()
   }
 }
 
@@ -124,13 +136,13 @@ function createBookCard(book) {
   const readBtn = document.createElement('button')
   const removeBtn = document.createElement('button')
 
-  bookCard.classList.add('books-grid__book-card')
-  title.classList.add('book-card__text')
-  author.classList.add('book-card__text')
-  pages.classList.add('book-card__text')
+  bookCard.classList.add('book-card')
+  title.classList.add('text')
+  author.classList.add('text')
+  pages.classList.add('text')
   readBtn.classList.add('btn')
   removeBtn.classList.add('btn')
-  removeBtn.classList.add('btn--red')
+  removeBtn.classList.add('btn-red')
   readBtn.onclick = toggleRead
   removeBtn.onclick = removeBook
 
@@ -141,10 +153,10 @@ function createBookCard(book) {
   readBtn.style.width = '120px'
   if (book.isRead) {
     readBtn.textContent = 'Read'
-    readBtn.classList.add('btn--light-green')
+    readBtn.classList.add('btn-light-green')
   } else {
     readBtn.textContent = 'Not read'
-    readBtn.classList.add('btn--light-red')
+    readBtn.classList.add('btn-light-red')
   }
 
   bookCard.appendChild(title)
@@ -155,74 +167,4 @@ function createBookCard(book) {
   booksGrid.appendChild(bookCard)
 }
 
-// AUTH
-
-const auth = firebase.auth()
-const whenSignedIn = document.getElementById('whenSignedIn')
-const whenSignedOut = document.getElementById('whenSignedOut')
-const loadingRing = document.getElementById('loadingRing')
-const signInBtn = document.getElementById('signInBtn')
-const signOutBtn = document.getElementById('signOutBtn')
-
-signInBtn.onclick = signIn
-signOutBtn.onclick = signOut
-
-function signIn() {
-  const provider = new firebase.auth.GoogleAuthProvider()
-  auth.signInWithPopup(provider)
-}
-
-function signOut() {
-  auth.signOut()
-}
-
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    loadingRing.classList.add('disable')
-    whenSignedOut.classList.remove('active')
-    whenSignedIn.classList.add('active')
-  } else {
-    loadingRing.classList.add('disable')
-    whenSignedIn.classList.remove('active')
-    whenSignedOut.classList.add('active')
-  }
-  restore()
-})
-
-// STORAGE
-
-function save() {
-  if (auth.currentUser) {
-    saveFirebase()
-  } else {
-    saveLocal()
-  }
-}
-
-function restore() {
-  if (auth.currentUser) {
-    restoreFirebase()
-  } else {
-    restoreLocal()
-  }
-}
-
-// FIRESTORE
-
-const db = firebase.firestore()
-
-function saveFirebase() {}
-
-function restoreFirebase() {}
-
-// LOCAL STORAGE
-
-function saveLocal() {
-  localStorage.setItem('myLibrary', JSON.stringify(library))
-}
-
-function restoreLocal() {
-  library = JSON.parse(localStorage.getItem('myLibrary'))
-  if (library === null) library = []
-  updateBooksGrid()
-}
+restoreLocal()
