@@ -192,14 +192,24 @@ auth.onAuthStateChanged((user) => {
 // STORAGE
 
 function save() {
-  saveLocal()
+  if (auth.currentUser) {
+    saveFirebase()
+  } else {
+    saveLocal()
+  }
 }
 
 function restore() {
-  restoreLocal()
+  if (auth.currentUser) {
+    restoreFirebase()
+  } else {
+    restoreLocal()
+  }
 }
 
 // FIRESTORE
+
+const db = firebase.firestore()
 
 function saveFirebase() {}
 
