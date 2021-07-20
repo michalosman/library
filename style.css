@@ -136,9 +136,9 @@ input {
   transition: transform 0.15s ease-in-out;
 }
 
-.btn-sign-in,
-.btn-sign-out {
-  margin: 0;
+.btn-log-in,
+.btn-log-out {
+  margin-right: 0;
 }
 
 .btn-default:hover {
@@ -315,7 +315,7 @@ input {
 /* LOADING */
 
 .lds-dual-ring {
-  display: inline-block;
+  display: none;
   width: 80px;
   height: 80px;
 }
@@ -332,8 +332,8 @@ input {
   animation: lds-dual-ring 1.2s linear infinite;
 }
 
-.disable {
-  display: none;
+.lds-dual-ring.active {
+  display: block;
 }
 
 @keyframes lds-dual-ring {

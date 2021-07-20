@@ -1,11 +1,11 @@
-// BOOK
+// TODO - account modal, removing books, updating read
 
 class Book {
   constructor(
     title = 'Unknown',
     author = 'Unknown',
     pages = '0',
-    isRead = 'false'
+    isRead = false
   ) {
     this.title = title
     this.author = author
@@ -14,77 +14,48 @@ class Book {
   }
 }
 
-// LIBRARY
+class Library {
+  constructor() {
+    this.books = []
+  }
 
-let library = []
+  addBook(newBook) {
+    if (this.books.some((book) => book.title === newBook.title)) return false
+    this.books.push(newBook)
+    return true
+  }
 
-const addToLibrary = (newBook) => {
-  if (library.some((book) => book.title === newBook.title)) return false
-  library.push(newBook)
-  saveLocal()
-  return true
+  removeBook(title) {
+    this.books = this.books.filter((book) => book.title !== title)
+  }
+
+  getBook(title) {
+    return this.books.find((book) => book.title === title)
+  }
 }
 
-const removeFromLibrary = (bookTitle) => {
-  library = library.filter((book) => book.title !== bookTitle)
-  saveLocal()
-}
+const library = new Library()
 
-const getBook = (bookTitle) => {
-  return library.find((book) => book.title === bookTitle)
-}
-
-// LOCAL STORAGE
-
-const saveLocal = () => {
-  localStorage.setItem('myLibrary', JSON.stringify(library))
-}
-
-const restoreLocal = () => {
-  library = JSON.parse(localStorage.getItem('myLibrary'))
-  if (library === null) library = []
-  updateBooksGrid()
-}
-
-// ADD BOOK POPUP
+//* UI
 
 const addBookBtn = document.getElementById('addBookBtn')
 const addBookPopup = document.getElementById('addBookPopup')
 const overlay = document.getElementById('overlay')
+const addBookForm = document.getElementById('addBookForm')
+const booksGrid = document.getElementById('booksGrid')
 
-addBookBtn.onclick = openAddBookPopup
-overlay.onclick = closeAddBookPopup
-window.onkeydown = (e) => {
-  if (e.key === 'Escape') closeAddBookPopup()
-}
-
-function openAddBookPopup() {
+const openAddBookPopup = () => {
   addBookForm.reset()
   addBookPopup.classList.add('active')
   overlay.classList.add('active')
 }
 
-function closeAddBookPopup() {
+const closeAddBookPopup = () => {
   addBookPopup.classList.remove('active')
   overlay.classList.remove('active')
 }
 
-// FORM
-
-const addBookForm = document.getElementById('addBookForm')
-addBookForm.onsubmit = addBook
-
-function addBook(e) {
-  e.preventDefault()
-  if (addToLibrary(getBookFromInput())) {
-    updateBooksGrid()
-    closeAddBookPopup()
-  } else {
-    alert('This book already exists in your library')
-  }
-}
-
-function getBookFromInput() {
+const getBookFromInput = () => {
   const title = `"${document.getElementById('title').value}"`
   const author = document.getElementById('author').value
   const pages = document.getElementById('pages').value
@@ -92,24 +63,38 @@ function getBookFromInput() {
   return new Book(title, author, pages, isRead)
 }
 
-// BOOKS GRID
+const addBook = (e) => {
+  e.preventDefault()
+  const newBook = getBookFromInput()
 
-const booksGrid = document.getElementById('booksGrid')
+  if (library.addBook(newBook)) {
+    if (auth.currentUser) {
+      db.collection('books').add(bookToJSON(newBook))
+    } else {
+      saveLocal()
+    }
+    updateBooksGrid()
+    closeAddBookPopup()
+  } else {
+    alert('This book already exists in your library')
+  }
+}
 
-function removeBook(e) {
+const removeBook = (e) => {
   removeFromLibrary(e.target.parentNode.firstChild.innerHTML)
   e.target.parentNode.parentNode.removeChild(e.target.parentNode)
 }
 
-function toggleRead(e) {
-  if (e.target.innerHTML === 'Read') {
-    getBook(e.target.parentNode.firstChild.innerHTML).isRead = false
+const toggleRead = (e) => {
+  book = library.getBook(e.target.parentNode.firstChild.innerHTML)
+  if (book.isRead) {
+    book.isRead = false
     e.target.innerHTML = 'Not read'
     e.target.classList.remove('btn-light-green')
     e.target.classList.add('btn-light-red')
     saveLocal()
   } else {
-    getBook(e.target.parentNode.firstChild.innerHTML).isRead = true
+    book.isRead = true
     e.target.innerHTML = 'Read'
     e.target.classList.remove('btn-light-red')
     e.target.classList.add('btn-light-green')
@@ -117,18 +102,18 @@ function toggleRead(e) {
   }
 }
 
-function updateBooksGrid() {
-  resetGrid()
-  for (let element of library) {
-    createBookCard(element)
+const updateBooksGrid = () => {
+  resetBooksGrid()
+  for (let book of library.books) {
+    createBookCard(book)
   }
 }
 
-function resetGrid() {
+const resetBooksGrid = () => {
   booksGrid.innerHTML = ''
 }
 
-function createBookCard(book) {
+const createBookCard = (book) => {
   const bookCard = document.createElement('div')
   const title = document.createElement('h3')
   const author = document.createElement('h3')
@@ -167,4 +152,97 @@ function createBookCard(book) {
   booksGrid.appendChild(bookCard)
 }
 
-restoreLocal()
+addBookBtn.onclick = openAddBookPopup
+overlay.onclick = closeAddBookPopup
+addBookForm.onsubmit = addBook
+window.onkeydown = (e) => {
+  if (e.key === 'Escape') closeAddBookPopup()
+}
+
+//* LOCAL STORAGE
+
+const saveLocal = () => {
+  localStorage.setItem('library', JSON.stringify(library.books))
+}
+
+const restoreLocal = () => {
+  library.books = JSON.parse(localStorage.getItem('library'))
+  console.log()
+  if (library.books === null) library.books = []
+}
+
+//* FIREBASE
+
+const auth = firebase.auth()
+const db = firebase.firestore()
+const logInBtn = document.getElementById('logInBtn')
+const logOutBtn = document.getElementById('logOutBtn')
+const loggedIn = document.getElementById('loggedIn')
+const loggedOut = document.getElementById('loggedOut')
+const loadingRing = document.getElementById('loadingRing')
+
+auth.onAuthStateChanged(async (user) => {
+  if (user) {
+    await db.collection('books').onSnapshot((snapshot) => {
+      library.books = docsToBooks(snapshot.docs)
+      updateBooksGrid()
+    })
+  } else {
+    restoreLocal()
+    updateBooksGrid()
+  }
+  setupNavbar(user)
+})
+
+logInBtn.onclick = () => {
+  const provider = new firebase.auth.GoogleAuthProvider()
+  auth.signInWithPopup(provider)
+}
+
+logOutBtn.onclick = () => {
+  auth.signOut()
+}
+
+const setupNavbar = (user) => {
+  if (user) {
+    loggedIn.classList.add('active')
+    loggedOut.classList.remove('active')
+    loadingRing.classList.remove('active')
+  } else {
+    loggedIn.classList.remove('active')
+    loggedOut.classList.add('active')
+    loadingRing.classList.remove('active')
+  }
+}
+
+// * UTILS
+
+const docsToBooks = (docs) => {
+  return docs.map((doc) => {
+    return new Book(
+      doc.data().title,
+      doc.data().author,
+      doc.data().pages,
+      doc.data().isRead
+    )
+  })
+}
+
+const JSONToBooks = (booksJSON) => {
+  return booksJSON.map(
+    (book) => new Book(book.title, book.author, book.pages, book.isRead)
+  )
+}
+
+const booksToJSON = (books) => {
+  return books.map((book) => bookToJSON(book))
+}
+
+const bookToJSON = (book) => {
+  return {
+    title: book.title,
+    author: book.author,
+    pages: book.pages,
+    isRead: book.isRead,
+  }
+}
