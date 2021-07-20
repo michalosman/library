@@ -1,4 +1,4 @@
-// TODO - account modal, removing books, updating read
+// TODO - removing books, updating read
 
 class Book {
   constructor(
@@ -38,21 +38,38 @@ const library = new Library()
 
 //* UI
 
+const accountBtn = document.getElementById('accountBtn')
+const accountModal = document.getElementById('accountModal')
 const addBookBtn = document.getElementById('addBookBtn')
-const addBookPopup = document.getElementById('addBookPopup')
+const addBookModal = document.getElementById('addBookModal')
 const overlay = document.getElementById('overlay')
 const addBookForm = document.getElementById('addBookForm')
 const booksGrid = document.getElementById('booksGrid')
 
-const openAddBookPopup = () => {
+const openAddBookModal = () => {
   addBookForm.reset()
-  addBookPopup.classList.add('active')
+  addBookModal.classList.add('active')
   overlay.classList.add('active')
 }
 
-const closeAddBookPopup = () => {
-  addBookPopup.classList.remove('active')
+const closeAddBookModal = () => {
+  addBookModal.classList.remove('active')
   overlay.classList.remove('active')
+}
+
+const openAccountModal = () => {
+  accountModal.classList.add('active')
+  overlay.classList.add('active')
+}
+
+const closeAccountModal = () => {
+  accountModal.classList.remove('active')
+  overlay.classList.remove('active')
+}
+
+const closeAllModals = () => {
+  closeAddBookModal()
+  closeAccountModal()
 }
 
 const getBookFromInput = () => {
@@ -74,7 +91,7 @@ const addBook = (e) => {
       saveLocal()
     }
     updateBooksGrid()
-    closeAddBookPopup()
+    closeAddBookModal()
   } else {
     alert('This book already exists in your library')
   }
@@ -152,11 +169,12 @@ const createBookCard = (book) => {
   booksGrid.appendChild(bookCard)
 }
 
-addBookBtn.onclick = openAddBookPopup
-overlay.onclick = closeAddBookPopup
+accountBtn.onclick = openAccountModal
+addBookBtn.onclick = openAddBookModal
+overlay.onclick = closeAllModals
 addBookForm.onsubmit = addBook
 window.onkeydown = (e) => {
-  if (e.key === 'Escape') closeAddBookPopup()
+  if (e.key === 'Escape') closeAllModals()
 }
 
 //* LOCAL STORAGE
@@ -191,6 +209,7 @@ auth.onAuthStateChanged(async (user) => {
     restoreLocal()
     updateBooksGrid()
   }
+  setupAccount(user)
   setupNavbar(user)
 })
 
@@ -212,6 +231,16 @@ const setupNavbar = (user) => {
     loggedIn.classList.remove('active')
     loggedOut.classList.add('active')
     loadingRing.classList.remove('active')
+  }
+}
+
+const setupAccount = (user) => {
+  if (user) {
+    accountModal.innerHTML = `
+      <p>Logged in as</p>
+      <p><strong>${user.email}</strong></p>`
+  } else {
+    accountModal.innerHTML = ''
   }
 }
 
