@@ -139,9 +139,6 @@ const createBookCard = (book) => {
   const removeBtn = document.createElement('button')
 
   bookCard.classList.add('book-card')
-  title.classList.add('text')
-  author.classList.add('text')
-  pages.classList.add('text')
   readBtn.classList.add('btn')
   removeBtn.classList.add('btn')
   removeBtn.classList.add('btn-red')
@@ -152,7 +149,6 @@ const createBookCard = (book) => {
   author.textContent = book.author
   pages.textContent = `${book.pages} pages`
   removeBtn.textContent = 'Remove'
-  readBtn.style.width = '120px'
   if (book.isRead) {
     readBtn.textContent = 'Read'
     readBtn.classList.add('btn-light-green')

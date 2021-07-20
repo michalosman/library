@@ -73,7 +73,7 @@ input {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1600px;
+  max-width: 1400px;
   padding: 2rem 4rem;
   margin: 0 auto;
 }
@@ -94,14 +94,15 @@ input {
 
 .logged-in.active,
 .logged-out.active {
-  display: block;
+  display: flex;
+  gap: 2rem;
 }
 
 /* MAIN */
 
 .main {
-  max-width: 1600px;
-  padding: 2rem;
+  max-width: 1400px;
+  padding: 4rem;
   margin: 0 auto;
   text-align: center;
 }
@@ -109,20 +110,19 @@ input {
 .books-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 2rem;
-  padding: 2rem;
+  grid-gap: 4rem;
+  margin-top: 4rem;
 }
 
 .book-card {
-  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 3rem;
   border: 2px solid var(--border);
   border-radius: 5px;
   background-color: var(--book-card);
   text-align: center;
-}
-
-.text {
-  padding: 0.5rem;
 }
 
 /* BUTTONS */
@@ -131,14 +131,8 @@ input {
   padding: 1rem;
   border: 2px solid var(--border);
   border-radius: 5px;
-  margin: 2rem;
   font-weight: bold;
   transition: transform 0.15s ease-in-out;
-}
-
-.btn-log-in,
-.btn-log-out {
-  margin-right: 0;
 }
 
 .btn-default:hover {
@@ -236,10 +230,10 @@ input {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 3rem;
 }
 
 .big-title {
-  margin: 2rem;
   font-size: 4rem;
 }
 
@@ -248,7 +242,6 @@ input {
   padding: 1rem;
   border: 2px solid var(--border);
   border-radius: 5px;
-  margin: 2rem;
   font-weight: bold;
 }
 
@@ -262,7 +255,6 @@ input {
   justify-content: space-between;
   width: 47%;
   padding: 1rem;
-  margin: 2rem;
 }
 
 .checkbox {
@@ -286,6 +278,8 @@ input {
   display: block;
 }
 
+/* MEDIA QUERIES */
+
 @media (max-width: 1200px) {
   .books-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -300,6 +294,11 @@ input {
   .books-grid {
     grid-template-columns: repeat(1, 1fr);
   }
+
+  .logged-in,
+  .logged-out {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 500px) {
@@ -307,12 +306,12 @@ input {
     font-size: 47.5%;
   }
 
-  .header__title {
+  .title {
     font-size: 8rem;
   }
 }
 
-/* LOADING */
+/* LOADING RING */
 
 .lds-dual-ring {
   display: none;
