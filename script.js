@@ -1,4 +1,4 @@
-// TODO - toggle read, firestore rules
+// TODO - firestore rules
 
 // Data Structures
 
@@ -100,6 +100,10 @@ const closeAllModals = () => {
   closeAccountModal()
 }
 
+const handleKeyboardInput = (e) => {
+  if (e.key === 'Escape') closeAllModals()
+}
+
 const updateBooksGrid = () => {
   resetBooksGrid()
   for (let book of library.books) {
@@ -158,10 +162,11 @@ const getBookFromInput = () => {
 const addBook = (e) => {
   e.preventDefault()
   const newBook = getBookFromInput()
+  const success = library.addBook(newBook)
 
-  if (library.addBook(newBook)) {
+  if (success) {
     if (auth.currentUser) {
-      addToDB(newBook)
+      addBookDB(newBook)
     } else {
       saveLocal()
       updateBooksGrid()
@@ -174,36 +179,27 @@ const addBook = (e) => {
 
 const removeBook = (e) => {
   const title = e.target.parentNode.firstChild.innerHTML.replaceAll('"', '')
-  library.removeBook(title)
 
   if (auth.currentUser) {
-    removeFromDB(title)
+    removeBookDB(title)
   } else {
+    library.removeBook(title)
     saveLocal()
     updateBooksGrid()
   }
 }
 
 const toggleRead = (e) => {
-  book = library.getBook(e.target.parentNode.firstChild.innerHTML)
+  const title = e.target.parentNode.firstChild.innerHTML.replaceAll('"', '')
+  const book = library.getBook(title)
 
-  if (book.isRead) {
-    book.isRead = false
-    e.target.innerHTML = 'Not read'
-    e.target.classList.remove('btn-light-green')
-    e.target.classList.add('btn-light-red')
-    saveLocal()
+  if (auth.currentUser) {
+    toggleBookIsReadDB(book)
   } else {
-    book.isRead = true
-    e.target.innerHTML = 'Read'
-    e.target.classList.remove('btn-light-red')
-    e.target.classList.add('btn-light-green')
+    book.isRead = !book.isRead
     saveLocal()
+    updateBooksGrid()
   }
-}
-
-const handleKeyboardInput = (e) => {
-  if (e.key === 'Escape') closeAllModals()
 }
 
 accountBtn.onclick = openAccountModal
@@ -222,7 +218,6 @@ const restoreLocal = () => {
   library.books = JSON.parse(localStorage.getItem('library')).map((book) =>
     JSONToBook(book)
   )
-  if (library.books === null) library.books = []
 }
 
 // Firebase Auth
@@ -263,24 +258,38 @@ let unsubscribe
 const setupRealTimeListener = () => {
   unsubscribe = db
     .collection('books')
+    .where('ownerId', '==', auth.currentUser.uid)
     .orderBy('title')
     .onSnapshot((snapshot) => {
       library.books = docsToBooks(snapshot.docs)
-      console.log('updated')
       updateBooksGrid()
     })
 }
 
-const addToDB = (newBook) => {
-  db.collection('books').add(bookToJSON(newBook))
+const addBookDB = (newBook) => {
+  db.collection('books').add(bookToDoc(newBook))
 }
 
-const removeFromDB = async (title) => {
+const removeBookDB = async (title) => {
+  db.collection('books')
+    .doc(await getBookIdDB(title))
+    .delete()
+}
+
+const toggleBookIsReadDB = async (book) => {
+  db.collection('books')
+    .doc(await getBookIdDB(book.title))
+    .update({ isRead: !book.isRead })
+}
+
+const getBookIdDB = async (title) => {
   const snapshot = await db
     .collection('books')
+    .where('ownerId', '==', auth.currentUser.uid)
     .where('title', '==', title)
     .get()
-  snapshot.docs.forEach((doc) => db.collection('books').doc(doc.id).delete())
+  const bookId = snapshot.docs.map((doc) => doc.id).join('')
+  return bookId
 }
 
 // Utils
@@ -300,8 +309,9 @@ const JSONToBook = (book) => {
   return new Book(book.title, book.author, book.pages, book.isRead)
 }
 
-const bookToJSON = (book) => {
+const bookToDoc = (book) => {
   return {
+    ownerId: auth.currentUser.uid,
     title: book.title,
     author: book.author,
     pages: book.pages,
