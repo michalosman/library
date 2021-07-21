@@ -14,47 +14,79 @@
   </head>
   <body>
     <header class="header">
-      <h1 class="header__title">Library</h1>
+      <div class="container">
+        <h1 class="title">Library</h1>
+        <nav>
+          <div class="lds-dual-ring active" id="loadingRing"></div>
+          <div class="logged-out" id="loggedOut">
+            <button class="btn btn-default btn-log-in" id="logInBtn">
+              Log in
+            </button>
+          </div>
+          <div class="logged-in" id="loggedIn">
+            <button class="btn btn-default" id="accountBtn">Account</button>
+            <button class="btn btn-default btn-log-out" id="logOutBtn">
+              Log out
+            </button>
+          </div>
+        </nav>
+      </div>
     </header>
     <main class="main">
-      <button class="button button--green button--large js-new-book-button">
-        New book
-      </button>
-      <div class="books-grid js-books-grid"></div>
+      <button class="btn btn-green btn-large" id="addBookBtn">Add book</button>
+      <div class="books-grid" id="booksGrid"></div>
     </main>
-    <div class="popup js-popup">
-      <form class="popup__form js-popup-form">
-        <h3 class="popup__title">Add new book</h3>
+    <!-- ADD BOOK MODAL -->
+    <div class="modal" id="addBookModal">
+      <form class="add-book-form" id="addBookForm">
+        <h3 class="big-title">Add new book</h3>
         <input
-          class="popup__input"
+          class="input"
           type="text"
           id="title"
           placeholder="Title"
           required
         />
+        <p class="error-msg" id="errorMsg"></p>
         <input
-          class="popup__input"
+          class="input"
           type="text"
           id="author"
           placeholder="Author"
           required
         />
         <input
-          class="popup__input"
+          class="input"
           type="number"
           id="pages"
           placeholder="Pages"
           required
         />
-        <div class="popup__is-read">
+        <div class="is-read">
           <label for="is-read">Read?</label>
-          <input class="popup__checkbox" type="checkbox" id="is-read" />
+          <input class="checkbox" type="checkbox" id="isRead" />
         </div>
-        <button class="button button--green button--medium" type="submit">
-          Submit
-        </button>
+        <button class="btn btn-green btn-medium" type="submit">Submit</button>
       </form>
     </div>
-    <div class="overlay js-overlay"></div>
+    <!-- ACCOUNT MODAL -->
+    <div class="modal" id="accountModal">xd</div>
+    <div class="overlay" id="overlay"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: 'AIzaSyBv30hELJ-tYN-kLoFFsWmD9az7TNqMNec',
+        authDomain: 'library-ba067.firebaseapp.com',
+        projectId: 'library-ba067',
+        storageBucket: 'library-ba067.appspot.com',
+        messagingSenderId: '915404085981',
+        appId: '1:915404085981:web:c5a384ca4340b4b7e39934',
+      }
+      firebase.initializeApp(firebaseConfig)
+    </script>
   </body>
 </html>
