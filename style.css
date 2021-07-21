@@ -32,6 +32,9 @@
 html {
   font-size: 62.5%;
   line-height: 1.6;
+  /* footer support */
+  position: relative;
+  min-height: 100%;
 }
 
 body {
@@ -105,6 +108,8 @@ input {
   padding: 4rem;
   margin: 0 auto;
   text-align: center;
+  /* footer support */
+  margin-bottom: 4rem;
 }
 
 .books-grid {
@@ -123,6 +128,32 @@ input {
   border-radius: 5px;
   background-color: var(--book-card);
   text-align: center;
+}
+
+/* FOOTER */
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.5rem;
+  color: var(--font);
+  font-size: 2rem;
+}
+
+.fa-github {
+  margin-left: 1rem;
+  color: var(--font);
+  font-size: 2rem;
+  transition: transform 0.15s ease-in-out;
+}
+
+.fa-github:hover {
+  transform: scale(1.2);
 }
 
 /* BUTTONS */

@@ -10,9 +10,15 @@
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald&display=swap"
       rel="stylesheet"
     />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <script
+      src="https://kit.fontawesome.com/4c536a6bd5.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="script.js" defer></script>
   </head>
   <body>
+    <!-- HEADER -->
     <header class="header">
       <div class="container">
         <h1 class="title">Library</h1>
@@ -32,10 +38,18 @@
         </nav>
       </div>
     </header>
+    <!-- MAIN -->
     <main class="main">
       <button class="btn btn-green btn-large" id="addBookBtn">Add book</button>
       <div class="books-grid" id="booksGrid"></div>
     </main>
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>Copyright © 2021 michalosman</p>
+      <a href="https://github.com/michalosman" target="_blank">
+        <i class="fab fa-github"></i
+      ></a>
+    </footer>
     <!-- ADD BOOK MODAL -->
     <div class="modal" id="addBookModal">
       <form class="add-book-form" id="addBookForm">
