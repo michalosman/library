@@ -18,9 +18,8 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-    <!-- HEADER -->
     <header class="header">
-      <div class="container">
+      <div class="header-container">
         <h1 class="title">Library</h1>
         <nav>
           <div class="lds-dual-ring active" id="loadingRing"></div>
@@ -38,19 +37,16 @@
         </nav>
       </div>
     </header>
-    <!-- MAIN -->
     <main class="main">
       <button class="btn btn-green btn-large" id="addBookBtn">Add book</button>
       <div class="books-grid" id="booksGrid"></div>
     </main>
-    <!-- FOOTER -->
     <footer class="footer">
       <p>Copyright © 2021 michalosman</p>
       <a href="https://github.com/michalosman" target="_blank">
         <i class="fab fa-github"></i
       ></a>
     </footer>
-    <!-- ADD BOOK MODAL -->
     <div class="modal" id="addBookModal">
       <form class="add-book-form" id="addBookForm">
         <h3 class="big-title">Add new book</h3>
@@ -83,7 +79,6 @@
         <button class="btn btn-green btn-medium" type="submit">Submit</button>
       </form>
     </div>
-    <!-- ACCOUNT MODAL -->
     <div class="modal" id="accountModal"></div>
     <div class="overlay" id="overlay"></div>
 
