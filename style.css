@@ -215,14 +215,13 @@ input[type='number'] {
 
 .is-read {
   display: flex;
-  justify-content: space-between;
-  width: 47%;
+  gap: 20px;
 }
 
 .checkbox {
-  width: 20px;
-  height: 20px;
-  margin-top: 16px;
+  width: 25px;
+  height: 25px;
+  margin-top: 13px;
 }
 
 .overlay {
