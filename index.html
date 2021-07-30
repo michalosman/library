@@ -1,101 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Library</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="shortcut icon" href="favicon.png" />
-    <script
-      src="https://kit.fontawesome.com/4c536a6bd5.js"
-      crossorigin="anonymous"
-    ></script>
-    <script src="script.js" defer></script>
-  </head>
-  <body>
-    <header class="header">
-      <div class="header-container">
-        <h1 class="title">Library</h1>
-        <nav>
-          <div class="lds-dual-ring active" id="loadingRing"></div>
-          <div class="logged-out" id="loggedOut">
-            <button class="btn btn-default btn-log-in" id="logInBtn">
-              Log in
-            </button>
-          </div>
-          <div class="logged-in" id="loggedIn">
-            <button class="btn btn-default" id="accountBtn">Account</button>
-            <button class="btn btn-default btn-log-out" id="logOutBtn">
-              Log out
-            </button>
-          </div>
-        </nav>
-      </div>
-    </header>
-    <main class="main">
-      <button class="btn btn-green btn-large" id="addBookBtn">Add book</button>
-      <div class="books-grid" id="booksGrid"></div>
-    </main>
-    <footer class="footer">
-      <p>Copyright © 2021 michalosman</p>
-      <a href="https://github.com/michalosman" target="_blank">
-        <i class="fab fa-github"></i
-      ></a>
-    </footer>
-    <div class="modal" id="addBookModal">
-      <form class="add-book-form" id="addBookForm">
-        <h3 class="big-title">Add new book</h3>
-        <input
-          class="input"
-          type="text"
-          id="title"
-          placeholder="Title"
-          required
-        />
-        <p class="error-msg" id="errorMsg"></p>
-        <input
-          class="input"
-          type="text"
-          id="author"
-          placeholder="Author"
-          required
-        />
-        <input
-          class="input"
-          type="number"
-          id="pages"
-          placeholder="Pages"
-          required
-        />
-        <div class="is-read">
-          <label for="is-read">Have you read it?</label>
-          <input class="checkbox" type="checkbox" id="isRead" />
-        </div>
-        <button class="btn btn-green btn-medium" type="submit">Submit</button>
-      </form>
-    </div>
-    <div class="modal" id="accountModal"></div>
-    <div class="overlay" id="overlay"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
-    <script>
-      const firebaseConfig = {
-        apiKey: 'AIzaSyBv30hELJ-tYN-kLoFFsWmD9az7TNqMNec',
-        authDomain: 'library-ba067.firebaseapp.com',
-        projectId: 'library-ba067',
-        storageBucket: 'library-ba067.appspot.com',
-        messagingSenderId: '915404085981',
-        appId: '1:915404085981:web:c5a384ca4340b4b7e39934',
-      }
-      firebase.initializeApp(firebaseConfig)
-    </script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Library</title>
+  <link rel="stylesheet" href="styles/index.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald&display=swap" rel="stylesheet" />
+  <link rel="shortcut icon" href="public/favicon.png" />
+  <script src="https://kit.fontawesome.com/4c536a6bd5.js" crossorigin="anonymous"></script>
+  <script type="module" src="src/index.js" defer></script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-container">
+      <h1 class="title">Library</h1>
+      <nav>
+        <div class="lds-dual-ring active" id="loadingRing"></div>
+        <div class="logged-out" id="loggedOut">
+          <button class="btn btn-default btn-log-in" id="logInBtn">
+            Log in
+          </button>
+        </div>
+        <div class="logged-in" id="loggedIn">
+          <button class="btn btn-default" id="accountBtn">Account</button>
+          <button class="btn btn-default btn-log-out" id="logOutBtn">
+            Log out
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <main class="main">
+    <button class="btn btn-green btn-large" id="addBookBtn">Add book</button>
+    <div class="books-grid" id="booksGrid"></div>
+  </main>
+
+  <div class="modal" id="addBookModal">
+    <form class="add-book-form" id="addBookForm">
+      <h3 class="big-title">Add new book</h3>
+      <input class="input" type="text" id="title" placeholder="Title" required />
+      <p class="error-msg" id="errorMsg"></p>
+      <input class="input" type="text" id="author" placeholder="Author" required />
+      <input class="input" type="number" id="pages" placeholder="Pages" required />
+      <div class="is-read">
+        <label for="is-read">Have you read it?</label>
+        <input class="checkbox" type="checkbox" id="isRead" />
+      </div>
+      <button class="btn btn-green btn-medium" type="submit">Submit</button>
+    </form>
+  </div>
+  <div class="modal" id="accountModal"></div>
+  <div class="overlay" id="overlay"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: 'AIzaSyBv30hELJ-tYN-kLoFFsWmD9az7TNqMNec',
+      authDomain: 'library-ba067.firebaseapp.com',
+      projectId: 'library-ba067',
+      storageBucket: 'library-ba067.appspot.com',
+      messagingSenderId: '915404085981',
+      appId: '1:915404085981:web:c5a384ca4340b4b7e39934',
+    }
+    firebase.initializeApp(firebaseConfig)
+  </script>
+</body>
+
 </html>
