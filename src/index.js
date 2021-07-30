@@ -1,58 +1,27 @@
-// Data Structures
-
-class Book {
-  constructor(
-    title = 'Unknown',
-    author = 'Unknown',
-    pages = '0',
-    isRead = false
-  ) {
-    this.title = title
-    this.author = author
-    this.pages = pages
-    this.isRead = isRead
-  }
-}
-
-class Library {
-  constructor() {
-    this.books = []
-  }
-
-  addBook(newBook) {
-    if (!this.isInLibrary(newBook)) {
-      this.books.push(newBook)
-    }
-  }
-
-  removeBook(title) {
-    this.books = this.books.filter((book) => book.title !== title)
-  }
-
-  getBook(title) {
-    return this.books.find((book) => book.title === title)
-  }
-
-  isInLibrary(newBook) {
-    return this.books.some((book) => book.title === newBook.title)
-  }
-}
+import Book from './Book.js'
+import Library from './Library.js'
+import {
+  addBookDB,
+  removeBookDB,
+  toggleBookIsReadDB,
+  auth
+} from './Firebase.js'
+import { saveLocal } from './Storage.js'
+import {
+  accountBtn,
+  accountModal,
+  addBookBtn,
+  addBookModal,
+  errorMsg,
+  overlay,
+  addBookForm,
+  booksGrid,
+  loggedIn,
+  loggedOut,
+  loadingRing
+} from './Elements.js'
 
 const library = new Library()
-
-// User Interface
-
-const accountBtn = document.getElementById('accountBtn')
-const accountModal = document.getElementById('accountModal')
-const addBookBtn = document.getElementById('addBookBtn')
-const addBookModal = document.getElementById('addBookModal')
-const errorMsg = document.getElementById('errorMsg')
-const overlay = document.getElementById('overlay')
-const addBookForm = document.getElementById('addBookForm')
-const booksGrid = document.getElementById('booksGrid')
-const loggedIn = document.getElementById('loggedIn')
-const loggedOut = document.getElementById('loggedOut')
-const loadingRing = document.getElementById('loadingRing')
 
 const setupNavbar = (user) => {
   if (user) {
@@ -169,7 +138,6 @@ const addBook = (e) => {
   if (library.isInLibrary(newBook)) {
     errorMsg.textContent = 'This book already exists in your library'
     errorMsg.classList.add('active')
-    return
   }
 
   if (auth.currentUser) {
@@ -214,117 +182,4 @@ overlay.onclick = closeAllModals
 addBookForm.onsubmit = addBook
 window.onkeydown = handleKeyboardInput
 
-// Local Storage
-
-const saveLocal = () => {
-  localStorage.setItem('library', JSON.stringify(library.books))
-}
-
-const restoreLocal = () => {
-  const books = JSON.parse(localStorage.getItem('library'))
-  if (books) {
-    library.books = books.map((book) => JSONToBook(book))
-  } else {
-    library.books = []
-  }
-}
-
-// Auth
-
-const auth = firebase.auth()
-const logInBtn = document.getElementById('logInBtn')
-const logOutBtn = document.getElementById('logOutBtn')
-
-auth.onAuthStateChanged(async (user) => {
-  if (user) {
-    setupRealTimeListener()
-  } else {
-    if (unsubscribe) unsubscribe()
-    restoreLocal()
-    updateBooksGrid()
-  }
-  setupAccountModal(user)
-  setupNavbar(user)
-})
-
-const signIn = () => {
-  const provider = new firebase.auth.GoogleAuthProvider()
-  auth.signInWithPopup(provider)
-}
-
-const signOut = () => {
-  auth.signOut()
-}
-
-logInBtn.onclick = signIn
-logOutBtn.onclick = signOut
-
-// Firestore
-
-const db = firebase.firestore()
-let unsubscribe
-
-const setupRealTimeListener = () => {
-  unsubscribe = db
-    .collection('books')
-    .where('ownerId', '==', auth.currentUser.uid)
-    .orderBy('createdAt')
-    .onSnapshot((snapshot) => {
-      library.books = docsToBooks(snapshot.docs)
-      updateBooksGrid()
-    })
-}
-
-const addBookDB = (newBook) => {
-  db.collection('books').add(bookToDoc(newBook))
-}
-
-const removeBookDB = async (title) => {
-  db.collection('books')
-    .doc(await getBookIdDB(title))
-    .delete()
-}
-
-const toggleBookIsReadDB = async (book) => {
-  db.collection('books')
-    .doc(await getBookIdDB(book.title))
-    .update({ isRead: !book.isRead })
-}
-
-const getBookIdDB = async (title) => {
-  const snapshot = await db
-    .collection('books')
-    .where('ownerId', '==', auth.currentUser.uid)
-    .where('title', '==', title)
-    .get()
-  const bookId = snapshot.docs.map((doc) => doc.id).join('')
-  return bookId
-}
-
-// Utils
-
-const docsToBooks = (docs) => {
-  return docs.map((doc) => {
-    return new Book(
-      doc.data().title,
-      doc.data().author,
-      doc.data().pages,
-      doc.data().isRead
-    )
-  })
-}
-
-const JSONToBook = (book) => {
-  return new Book(book.title, book.author, book.pages, book.isRead)
-}
-
-const bookToDoc = (book) => {
-  return {
-    ownerId: auth.currentUser.uid,
-    title: book.title,
-    author: book.author,
-    pages: book.pages,
-    isRead: book.isRead,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-  }
-}
+export { library, updateBooksGrid, setupAccountModal, setupNavbar }
