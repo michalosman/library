@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
       rel="stylesheet"
     />
     <link rel="shortcut icon" href="favicon.png" />
@@ -19,26 +20,22 @@
   </head>
   <body>
     <header class="header">
-      <div class="header-container">
-        <h1 class="title">Library</h1>
+      <div class="container">
+        <h1>library</h1>
         <nav>
           <div class="lds-dual-ring active" id="loadingRing"></div>
           <div class="logged-out" id="loggedOut">
-            <button class="btn btn-default btn-log-in" id="logInBtn">
-              Log in
-            </button>
+            <button class="btn" id="logInBtn">Log in</button>
           </div>
           <div class="logged-in" id="loggedIn">
-            <button class="btn btn-default" id="accountBtn">Account</button>
-            <button class="btn btn-default btn-log-out" id="logOutBtn">
-              Log out
-            </button>
+            <button class="btn" id="accountBtn">Account</button>
+            <button class="btn" id="logOutBtn">Log out</button>
           </div>
         </nav>
       </div>
     </header>
-    <main class="main">
-      <button class="btn btn-green btn-large" id="addBookBtn">Add book</button>
+    <main class="main container">
+      <button class="btn btn-add" id="addBookBtn">+ Add book</button>
       <div class="books-grid" id="booksGrid"></div>
     </main>
     <footer class="footer">
@@ -55,13 +52,14 @@
     </footer>
     <div class="modal" id="addBookModal">
       <form class="add-book-form" id="addBookForm">
-        <h3 class="big-title">Add new book</h3>
+        <h3>Add new book</h3>
         <input
           class="input"
           type="text"
           id="title"
           placeholder="Title"
           required
+          maxlength="100"
         />
         <p class="error-msg" id="errorMsg"></p>
         <input
@@ -70,6 +68,7 @@
           id="author"
           placeholder="Author"
           required
+          maxlength="100"
         />
         <input
           class="input"
@@ -77,12 +76,13 @@
           id="pages"
           placeholder="Pages"
           required
+          max="10000"
         />
         <div class="is-read">
           <label for="is-read">Have you read it?</label>
           <input class="checkbox" type="checkbox" id="isRead" />
         </div>
-        <button class="btn btn-green btn-medium" type="submit">Submit</button>
+        <button class="btn btn-light-green" type="submit">Submit</button>
       </form>
     </div>
     <div class="modal" id="accountModal"></div>

@@ -1,25 +1,21 @@
 :root {
-  --body: #f1f3f8;
-  --font: #393b44;
-  --border: #666;
-  --header: #d6e0f0;
-  --title-font: #282a33;
-  --book-card: #e0e2e7;
-  --btn-green: #abf79c;
-  --btn-green-hover: #9ae68b;
-  --btn-green-active: #89d57a;
-  --btn-red: #da9797;
-  --btn-red-hover: #c98686;
-  --btn-red-active: #b87575;
-  --btn-light-green: #d3ffcd;
-  --btn-light-green-hover: #c2eebc;
-  --btn-light-green-active: #b1ddab;
-  --btn-light-red: #ffe8e8;
-  --btn-light-red-hover: #eed7d7;
-  --btn-light-red-active: #ddc6c6;
-  --modal: #d6e0f0;
-  --modal-border: #282a33;
+  --white: #fffbfb;
+  --grey: #f0eef1;
+  --black: #050505;
+  --red: #ff7070;
+  --light-green: #9fff9c;
+  --light-red: #ff9c9c;
+  --border-radius: 8px;
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 15px;
+  --spacing-lg: 20px;
+  --spacing-xl: 40px;
+  --container-width: 1200px;
+  --shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
+
+/* CSS RESET */
 
 *,
 *::before,
@@ -36,20 +32,14 @@ html {
 }
 
 body {
-  background-color: var(--body);
-  color: var(--font);
-  font-family: 'Oswald', sans-serif;
-  font-size: 30px;
-  line-height: 1.6;
+  background-color: var(--grey);
+  color: var(--black);
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
   word-wrap: break-word;
   /* footer support */
   margin-bottom: 100px;
-}
-
-h1,
-h2,
-h3 {
-  line-height: 1.2;
 }
 
 button,
@@ -58,6 +48,7 @@ input {
   color: inherit;
   font-family: inherit;
   font-size: inherit;
+  font-weight: inherit;
   cursor: pointer;
   outline: none;
 }
@@ -67,68 +58,92 @@ input[type='number'] {
   cursor: text;
 }
 
-/* HEADER */
+/* UTILS */
 
-.header {
-  border-bottom: 2px solid var(--border);
-  background-color: var(--header);
-}
-
-.header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1400px;
-  padding: 40px;
+.container {
+  max-width: var(--container-width);
+  padding: var(--spacing-lg);
   margin: 0 auto;
 }
 
-.title {
+.btn {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius);
+  transition: filter 0.15s ease-in-out;
+}
+
+.btn:hover {
+  filter: brightness(90%);
+}
+
+.btn-add {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.btn-light-green {
+  background-color: var(--light-green);
+}
+
+.btn-light-red {
+  background-color: var(--light-red);
+}
+
+/* HEADER */
+
+.header {
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.header .container {
   display: flex;
-  color: var(--title-font);
-  font-family: 'Bebas Neue', cursive;
-  font-size: 100px;
-  line-height: 1;
-  letter-spacing: 10px;
-  text-align: center;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .logged-in,
 .logged-out {
   display: none;
-  gap: 20px;
 }
 
 .logged-in.active,
 .logged-out.active {
   display: flex;
+  gap: 20px;
 }
 
 /* MAIN */
 
 .main {
-  max-width: 1400px;
-  padding: 40px;
-  margin: 0 auto;
+  margin-top: var(--spacing-lg);
   text-align: center;
 }
 
 .books-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 40px;
-  margin-top: 40px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--spacing-xl);
+  margin-top: var(--spacing-xl);
 }
 
 .book-card {
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  padding: 30px;
-  border: 2px solid var(--border);
-  border-radius: 5px;
-  background-color: var(--book-card);
-  text-align: center;
+  justify-content: space-between;
+  font-size: 20px;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+  line-height: 1.2;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
 }
 
 /* FOOTER */
@@ -142,13 +157,12 @@ input[type='number'] {
   justify-content: center;
   gap: 10px;
   width: 100%;
-  padding: 10px;
-  font-size: 24px;
+  padding: var(--spacing-sm);
 }
 
 .fa-github {
-  color: var(--font);
-  font-size: 28px;
+  font-size: 24px;
+  color: var(--black);
   transition: transform 0.3s ease-in-out;
 }
 
@@ -163,14 +177,13 @@ input[type='number'] {
   z-index: 1;
   top: 50%;
   left: 50%;
-  width: 400px;
-  padding: 40px;
-  border: 2px solid var(--modal-border);
-  border-radius: 10px;
-  background-color: var(--modal);
+  width: 300px;
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  background-color: var(--grey);
   text-align: center;
   transform: translate(-50%, -50%) scale(0);
-  transition: 200ms ease-in-out;
+  transition: 0.2s ease-in-out;
 }
 
 .modal.active {
@@ -181,47 +194,38 @@ input[type='number'] {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: var(--spacing-lg);
 }
 
-.big-title {
-  font-size: 40px;
+.add-book-form button {
+  width: 100%;
 }
 
 .error-msg {
   display: none;
   color: red;
-  width: 90%;
-  margin-top: -20px;
-  font-size: 24px;
 }
 
 .error-msg.active {
   display: block;
+  margin-top: -15px;
 }
 
 .input {
-  width: 90%;
+  width: 100%;
   padding: 10px;
-  border: 2px solid var(--border);
-  border-radius: 5px;
-  font-weight: bold;
-}
-
-.input:focus {
-  outline: none;
-  border-color: black;
+  border-radius: var(--border-radius);
 }
 
 .is-read {
   display: flex;
-  gap: 20px;
+  gap: var(--spacing-md);
 }
 
 .checkbox {
-  width: 25px;
-  height: 25px;
-  margin-top: 13px;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
 }
 
 .overlay {
@@ -231,110 +235,30 @@ input[type='number'] {
   display: none;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .overlay.active {
   display: block;
 }
 
-/* BUTTONS */
-
-.btn {
-  padding: 10px;
-  border: 2px solid var(--border);
-  border-radius: 5px;
-  font-weight: bold;
-  transition: transform 0.15s ease-in-out;
-}
-
-.btn-default:hover {
-  transform: scale(1.1);
-}
-
-.btn-default:focus {
-  transform: scale(1.1);
-}
-
-.btn-medium {
-  font-size: 40px;
-}
-
-.btn-large {
-  padding: 15px;
-  font-size: 50px;
-}
-
-.btn-green {
-  background-color: var(--btn-green);
-}
-
-.btn-green:hover,
-.btn-green:focus {
-  background-color: var(--btn-green-hover);
-}
-
-.btn-green:active {
-  background-color: var(--btn-green-active);
-}
-
-.btn-red {
-  background-color: var(--btn-red);
-}
-
-.btn-red:hover,
-.btn-red:focus {
-  background-color: var(--btn-red-hover);
-}
-
-.btn-red:active {
-  background-color: var(--btn-red-active);
-}
-
-.btn-light-green {
-  background-color: var(--btn-light-green);
-}
-
-.btn-light-green:hover,
-.btn-light-green:focus {
-  background-color: var(--btn-light-green-hover);
-}
-
-.btn-light-green:active {
-  background-color: var(--btn-light-green-active);
-}
-
-.btn-light-red {
-  background-color: var(--btn-light-red);
-}
-
-.btn-light-red:hover,
-.btn-light-red:focus {
-  background-color: var(--btn-light-red-hover);
-}
-
-.btn-light-red:active {
-  background-color: var(--btn-light-red-active);
-}
-
 /* LOADING RING */
 
 .lds-dual-ring {
   display: none;
-  width: 80px;
-  height: 80px;
+  width: 38px;
+  height: 38px;
 }
 
 .lds-dual-ring:after {
   content: ' ';
   display: block;
-  width: 64px;
-  height: 64px;
+  width: 30px;
+  height: 30px;
   margin: 8px;
   border-radius: 50%;
-  border: 6px solid #fff;
-  border-color: #fff transparent #fff transparent;
+  border: 3px solid var(--black);
+  border-color: var(--black) transparent var(--black) transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
 
@@ -353,27 +277,18 @@ input[type='number'] {
 
 /* MEDIA QUERIES */
 
-@media (max-width: 1200px) {
-  .books-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 800px) {
-  .header-container {
+@media (max-width: 400px) {
+  .header .container {
     flex-direction: column;
-    gap: 30px;
+    gap: var(--spacing-md);
+    padding-top: var(--spacing-sm);
   }
 
   .main {
-    max-width: 500px;
+    margin-top: 0;
   }
 
-  .books-grid {
-    grid-template-columns: repeat(1, 1fr);
-  }
-
-  .modal {
-    max-width: 90%;
+  :root {
+    --spacing-xl: 20px;
   }
 }
