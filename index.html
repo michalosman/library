@@ -12,10 +12,6 @@
       rel="stylesheet"
     />
     <link rel="shortcut icon" href="favicon.png" />
-    <script
-      src="https://kit.fontawesome.com/4c536a6bd5.js"
-      crossorigin="anonymous"
-    ></script>
     <script src="script.js" defer></script>
   </head>
   <body>
@@ -42,13 +38,13 @@
       <p>
         Copyright ©
         <script>
-          document.write(new Date().getFullYear())
+          document.write(new Date().getFullYear());
         </script>
         michalosman
       </p>
       <a href="https://github.com/michalosman" target="_blank">
-        <i class="fab fa-github"></i
-      ></a>
+        <img class="github-logo" src="github-mark.svg" />
+      </a>
     </footer>
     <div class="modal" id="addBookModal">
       <form class="add-book-form" id="addBookForm">
@@ -94,14 +90,14 @@
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
     <script>
       const firebaseConfig = {
-        apiKey: 'AIzaSyBv30hELJ-tYN-kLoFFsWmD9az7TNqMNec',
-        authDomain: 'library-ba067.firebaseapp.com',
-        projectId: 'library-ba067',
-        storageBucket: 'library-ba067.appspot.com',
-        messagingSenderId: '915404085981',
-        appId: '1:915404085981:web:c5a384ca4340b4b7e39934',
-      }
-      firebase.initializeApp(firebaseConfig)
+        apiKey: "AIzaSyBv30hELJ-tYN-kLoFFsWmD9az7TNqMNec",
+        authDomain: "library-ba067.firebaseapp.com",
+        projectId: "library-ba067",
+        storageBucket: "library-ba067.appspot.com",
+        messagingSenderId: "915404085981",
+        appId: "1:915404085981:web:c5a384ca4340b4b7e39934",
+      };
+      firebase.initializeApp(firebaseConfig);
     </script>
   </body>
 </html>
